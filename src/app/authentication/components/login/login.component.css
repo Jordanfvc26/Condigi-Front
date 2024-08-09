@@ -1,0 +1,142 @@
+* {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.side-left,
+.side-right {
+    height: 100vh;
+}
+
+.container-carousel {
+    width: 80%;
+    height: 60vh;
+}
+
+.container-img>img {
+    width: 250px !important;
+}
+
+.container-form {
+    border-radius: 10px;
+    padding: 20px;
+}
+
+/*--------------------------------Estilos del formulario-------------------------------*/
+.container-box {
+    display: flex;
+    justify-content: center;
+}
+
+.container-box>.box {
+    height: auto;
+    background-color: var(--white);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    align-items: center;
+    justify-content: center;
+    padding: 25px 60px;
+    background-color: var(--white-color);
+    width: 500px;
+}
+
+.no-account>p,
+label {
+    color: var(--text-inputs-primary-color)
+}
+
+.no-account>p {
+    font-size: 14px !important;
+}
+
+.terms-and-conditions>span {
+    color: var(--gray-dark-color);
+    font-size: 12px;
+}
+
+.terms,
+.politics {
+    cursor: pointer !important;
+}
+
+.terms:hover,
+.politics:hover {
+    color: var(--primary-color) !important;
+}
+
+.input-group-text>fa-icon {
+    color: var(--primary-color);
+}
+
+.input-group-text>fa-icon:hover {
+    cursor: pointer;
+}
+
+.input-group>span {
+    background-color: var(--bg-inputs);
+}
+
+#container-icon-view-password {
+    margin-left: 5px !important;
+    border-radius: 8px;
+}
+
+.icon-password>svg {
+    width: 20px;
+}
+
+/*--------------------------------Opciones del login-------------------------------*/
+.option-login {
+    border: 1px solid var(--gray-ligth-one-color);
+    border-radius: 10px;
+    width: 47%;
+    padding: 20px 10px;
+    cursor: pointer;
+}
+
+.option-login:hover {
+    border: 1px solid var(--primary-color);
+}
+
+.hero-icon>svg {
+    width: 25px;
+}
+
+/*-----------------------------Estilo para el carousel-----------------------------*/
+[nz-carousel-content] {
+    text-align: center;
+    height: 160px;
+    line-height: 160px;
+    color: #fff;
+    overflow: hidden;
+    z-index: 100;
+}
+
+h3 {
+    color: #fff;
+    margin-bottom: 0;
+    user-select: none;
+}
+
+/*------------------------------Responsive web design------------------------------*/
+/*-----------------------------------Smarthphone-----------------------------------*/
+@media only screen and (max-width: 768px) {
+    .side-left {
+        height: 30vh;
+    }
+
+    .side-right {
+        height: 70vh;
+    }
+
+    .container-carousel {
+        width: 80%;
+        height: 80%;
+    }
+
+    .container-img>img {
+        width: 150px !important;
+    }
+}
