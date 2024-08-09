@@ -1,3 +1,13 @@
 .validators{
     color: var(--cancel-color);
 }
+
+.form-select-sm{
+    padding: 5px;
+    border-radius: 8px !important;
+}
+
+.action-buttons{
+    display: flex;
+    justify-content:space-between;
+  }

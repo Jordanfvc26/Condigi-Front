@@ -21,8 +21,9 @@
                 <h4 class="text-center mb-5"><b>Regístrate en condigi</b></h4>
 
                 <mat-stepper (linear)="true" #stepper>
+                    <!--Paso 1 (Información básica)-->
                     <mat-step [stepControl]="basicInfoForm">
-                        <form [formGroup]="basicInfoForm">
+                        <form [formGroup]="basicInfoForm" class="mt-3">
                             <ng-template matStepLabel>Info. básica</ng-template>
 
                             <!--Nombres-->
@@ -86,7 +87,7 @@
                             </div>
 
                             <!--Teléfono-->
-                            <div class="mb-3">
+                            <div class="mb-4">
                                 <label class="mb-1"><b>Teléfono</b></label>
                                 <input type="text" class="form-control form-control-sm bg-light fs-6"
                                     formControlName="phone" placeholder="0999999999*" [maxlength]="10" [ngClass]="{
@@ -107,11 +108,11 @@
 
                             <!--Botones-->
                             <div class="row action-buttons mt-4 mb-3">
-                                <div class="col-6">
+                                <div class="col-5">
                                     <button type="button" class="btn btn-back btn-sm w-100" (click)="goToLogin()">
                                         <fa-icon [icon]="iconBack"></fa-icon> Login</button>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-5">
                                     <button type="button" class="btn btn-primary btn-sm w-100" (click)="nextStep()"
                                         [disabled]="!basicInfoForm.valid">Siguiente <fa-icon [icon]="iconNext"></fa-icon></button>
                                 </div>
@@ -119,9 +120,97 @@
                         </form>
                     </mat-step>
 
+                    <!--Paso 2 (Direcciones y Contacto)-->
                     <mat-step [stepControl]="contactForm" label="Contacto">
-                        <form [formGroup]="contactForm">
+                        <form [formGroup]="contactForm" class="mt-3">
+                            <!--Province-->
+                            <div class="mb-3">
+                                <label class="mb-1"><b>Provincia</b></label>
+                                <select class="form-select form-select-sm fs-6" [(ngModel)]="optionProvinceSelected"
+                                    formControlName="province" [ngClass]="{
+                                                'is-invalid': credentialsForm.get('province')?.hasError('required') && credentialsForm.get('province')?.touched,
+                                                'is-valid': optionProvinceSelected!= ''
+                                                }">
+                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    <option value="teacher">Profesor(a)</option>
+                                    <option value="student">Estudiante</option>
+                                </select>
+                                @if (credentialsForm.get('province')?.hasError('required') && credentialsForm.get('province')?.touched) {
+                                    <div class="validators">
+                                        <small>¡Este campo es requerido!</small>
+                                    </div>
+                                }
+                            </div>
 
+                             <!--Cantón-->
+                             <div class="mb-3">
+                                <label class="mb-1"><b>Cantón</b></label>
+                                <select class="form-select form-select-sm fs-6 selectpicker" [(ngModel)]="optionCantonSelected"
+                                    formControlName="cantont" [ngClass]="{
+                                                'is-invalid': credentialsForm.get('cantont')?.hasError('required') && credentialsForm.get('cantont')?.touched,
+                                                'is-valid': optionCantonSelected!= ''
+                                                }">
+                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    <option value="teacher">Profesor(a)</option>
+                                    <option value="student">Estudiante</option>
+                                </select>
+                                @if (credentialsForm.get('cantont')?.hasError('required') && credentialsForm.get('cantont')?.touched) {
+                                    <div class="validators">
+                                        <small>¡Este campo es requerido!</small>
+                                    </div>
+                                }
+                            </div>
+
+                             <!--Parroquia-->
+                             <div class="mb-3">
+                                <label class="mb-1"><b>Parroquia</b></label>
+                                <select class="form-select form-select-sm fs-6 selectpicker" [(ngModel)]="optionParishSelected"
+                                    formControlName="parish" [ngClass]="{
+                                                'is-invalid': credentialsForm.get('parish')?.hasError('required') && credentialsForm.get('parish')?.touched,
+                                                'is-valid': optionParishSelected!= ''
+                                                }">
+                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    <option value="teacher">Profesor(a)</option>
+                                    <option value="student">Estudiante</option>
+                                </select>
+                                @if (credentialsForm.get('parish')?.hasError('required') && credentialsForm.get('parish')?.touched) {
+                                    <div class="validators">
+                                        <small>¡Este campo es requerido!</small>
+                                    </div>
+                                }
+                            </div>
+
+                            <!--Dirección-->
+                            <div class="mb-4">
+                                <label class="mb-1"><b>Dirección</b></label>
+                                <input type="text" class="form-control form-control-sm bg-light fs-6"
+                                    formControlName="address" placeholder="Dirección*" [maxlength]="50" [ngClass]="{
+                                        'is-invalid': basicInfoForm.get('address')?.hasError('required') && basicInfoForm.get('address')?.touched || basicInfoForm.get('address')?.hasError('pattern')==true,
+                                        'is-valid': basicInfoForm.get('address')?.hasError('required')==false && basicInfoForm.get('address')?.hasError('pattern') == false && basicInfoForm.get('address')?.value?.length >= 4
+                                        }">
+                                @if (basicInfoForm.get('address')?.hasError('required') && basicInfoForm.get('address')?.touched) {
+                                    <div class="validators">
+                                        <small>¡Este campo es requerido!</small>
+                                    </div>
+                                }
+                                @if (basicInfoForm.get('address')?.hasError('pattern')) {
+                                    <div class="validators">
+                                        <small>¡Solo se permiten letras!</small>
+                                    </div>
+                                }
+                            </div>
+
+                            <!--Botones-->
+                            <div class="row action-buttons mt-4 mb-3">
+                                <div class="col-5">
+                                    <button type="button" class="btn btn-back btn-sm w-100" matStepperPrevious>
+                                        <fa-icon [icon]="iconBack"></fa-icon> Atrás</button>
+                                </div>
+                                <div class="col-5">
+                                    <button type="button" class="btn btn-primary btn-sm w-100" (click)="nextStep()"
+                                        [disabled]="!basicInfoForm.valid">Siguiente <fa-icon [icon]="iconNext"></fa-icon></button>
+                                </div>
+                            </div>
                         </form>
                     </mat-step>
 

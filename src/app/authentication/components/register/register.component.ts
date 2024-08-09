@@ -30,6 +30,10 @@ export class RegisterComponent {
   showPassword: boolean = false;
   arrayImages: string[] = ["https://cdn-icons-png.flaticon.com/512/9187/9187604.png", "https://www.iconpacks.net/icons/1/free-user-login-icon-305-thumb.png", "https://static-00.iconduck.com/assets.00/user-login-icon-487x512-xx4t1c61.png"];
 
+  optionProvinceSelected: string = "";
+  optionCantonSelected: string = "";
+  optionParishSelected: string = "";
+
   //constructor
   constructor(
     private router: Router,
