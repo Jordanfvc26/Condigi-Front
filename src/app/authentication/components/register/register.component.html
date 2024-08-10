@@ -1,14 +1,22 @@
+@if(loaderStatus){
+    <app-loader></app-loader>
+}
+
 <body>
     <div class="row">
         <!--Lado izquierdo con el el carousel de imágenes-->
-        <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 d-flex justify-content-center align-items-center side-left"
-            style="background-color: #f28123;">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 d-flex justify-content-center align-items-center side-left">
             <div class="container-carousel">
                 <nz-carousel nzAutoPlay>
-                    @for (index of arrayImages; track index) {
-                    <div nz-carousel-content class="container-img d-flex justify-content-center align-items-center">
-                        <img [src]="index" alt="imagen" />
-                    </div>
+                    @for(item of arrayImages; track $index){
+                        <div nz-carousel-content>
+                            <div class="content d-flex flex-column justify-content-center align-items-center">
+                                <h3 class="text-center mb-4">{{ messages[$index] }}</h3>
+                                <div class="container-img">
+                                    <img [src]="item" alt="imagen" [width]="500"/>
+                                </div>
+                            </div>
+                        </div>
                     }
                 </nz-carousel>
             </div>
@@ -18,31 +26,32 @@
         <div
             class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 d-flex justify-content-center align-items-center side-right">
             <div class="col-11 col-sm-11 col-md-10 col-lg-10 col-xl-8 container-form">
-                <h4 class="text-center mb-5"><b>Regístrate en condigi</b></h4>
+                <h4 class="text-center mb-5"><b>Regístrate en Condigi</b></h4>
 
                 <mat-stepper (linear)="true" #stepper>
                     <!--Paso 1 (Información básica)-->
                     <mat-step [stepControl]="basicInfoForm">
                         <form [formGroup]="basicInfoForm" class="mt-3">
-                            <ng-template matStepLabel>Info. básica</ng-template>
+                            <ng-template matStepLabel>Información</ng-template>
 
                             <!--Nombres-->
                             <div class="mb-3">
                                 <label class="mb-1"><b>Nombres</b></label>
                                 <input type="text" class="form-control form-control-sm bg-light fs-6"
-                                    formControlName="firstName" placeholder="Nombres*" [maxlength]="50" [ngClass]="{
+                                    formControlName="firstName" placeholder="Jordan Fabian" [maxlength]="50" [ngClass]="{
                                         'is-invalid': basicInfoForm.get('firstName')?.hasError('required') && basicInfoForm.get('firstName')?.touched || basicInfoForm.get('firstName')?.hasError('pattern')==true,
                                         'is-valid': basicInfoForm.get('firstName')?.hasError('required')==false && basicInfoForm.get('firstName')?.hasError('pattern') == false && basicInfoForm.get('firstName')?.value?.length >= 4
                                         }">
-                                @if (basicInfoForm.get('firstName')?.hasError('required') && basicInfoForm.get('firstName')?.touched) {
-                                    <div class="validators">
-                                        <small>¡Este campo es requerido!</small>
-                                    </div>
+                                @if (basicInfoForm.get('firstName')?.hasError('required') &&
+                                basicInfoForm.get('firstName')?.touched) {
+                                <div class="validators">
+                                    <small>¡Este campo es requerido!</small>
+                                </div>
                                 }
                                 @if (basicInfoForm.get('firstName')?.hasError('pattern')) {
-                                    <div class="validators">
-                                        <small>¡Solo se permiten letras!</small>
-                                    </div>
+                                <div class="validators">
+                                    <small>¡Solo se permiten letras!</small>
+                                </div>
                                 }
                             </div>
 
@@ -50,19 +59,20 @@
                             <div class="mb-3">
                                 <label class="mb-1"><b>Apellidos</b></label>
                                 <input type="text" class="form-control form-control-sm bg-light fs-6"
-                                    formControlName="lastName" placeholder="Apellidos*" [maxlength]="50" [ngClass]="{
+                                    formControlName="lastName" placeholder="Vera Coello" [maxlength]="50" [ngClass]="{
                                         'is-invalid': basicInfoForm.get('lastName')?.hasError('required') && basicInfoForm.get('lastName')?.touched || basicInfoForm.get('lastName')?.hasError('pattern')==true,
                                         'is-valid': basicInfoForm.get('lastName')?.hasError('required')==false && basicInfoForm.get('lastName')?.hasError('pattern') == false && basicInfoForm.get('lastName')?.value?.length >= 4
                                         }">
-                                @if (basicInfoForm.get('lastName')?.hasError('required') && basicInfoForm.get('lastName')?.touched) {
-                                    <div class="validators">
-                                        <small>¡Este campo es requerido!</small>
-                                    </div>
+                                @if (basicInfoForm.get('lastName')?.hasError('required') &&
+                                basicInfoForm.get('lastName')?.touched) {
+                                <div class="validators">
+                                    <small>¡Este campo es requerido!</small>
+                                </div>
                                 }
                                 @if (basicInfoForm.get('lastName')?.hasError('pattern')) {
-                                    <div class="validators">
-                                        <small>¡Solo se permiten letras!</small>
-                                    </div>
+                                <div class="validators">
+                                    <small>¡Solo se permiten letras!</small>
+                                </div>
                                 }
                             </div>
 
@@ -70,19 +80,21 @@
                             <div class="mb-3">
                                 <label class="mb-1"><b>Cédula</b></label>
                                 <input type="text" class="form-control form-control-sm bg-light fs-6"
-                                    formControlName="identification" placeholder="1234567890" [maxlength]="10" [ngClass]="{
+                                    formControlName="identification" placeholder="1234567890" [maxlength]="10"
+                                    [ngClass]="{
                                         'is-invalid': basicInfoForm.get('identification')?.hasError('required') && basicInfoForm.get('identification')?.touched || basicInfoForm.get('identification')?.hasError('pattern')==true,
                                         'is-valid': basicInfoForm.get('identification')?.hasError('required')==false && basicInfoForm.get('identification')?.hasError('pattern') == false && basicInfoForm.get('identification')?.value?.length >= 4
                                         }">
-                                @if (basicInfoForm.get('identification')?.hasError('required') && basicInfoForm.get('identification')?.touched) {
-                                    <div class="validators">
-                                        <small>¡Este campo es requerido!</small>
-                                    </div>
+                                @if (basicInfoForm.get('identification')?.hasError('required') &&
+                                basicInfoForm.get('identification')?.touched) {
+                                <div class="validators">
+                                    <small>¡Este campo es requerido!</small>
+                                </div>
                                 }
                                 @if (basicInfoForm.get('identification')?.hasError('pattern')) {
-                                    <div class="validators">
-                                        <small>¡Solo se permiten letras!</small>
-                                    </div>
+                                <div class="validators">
+                                    <small>¡Solo se permiten letras!</small>
+                                </div>
                                 }
                             </div>
 
@@ -94,15 +106,16 @@
                                         'is-invalid': basicInfoForm.get('phone')?.hasError('required') && basicInfoForm.get('phone')?.touched || basicInfoForm.get('phone')?.hasError('pattern')==true,
                                         'is-valid': basicInfoForm.get('phone')?.hasError('required')==false && basicInfoForm.get('phone')?.hasError('pattern') == false && basicInfoForm.get('phone')?.value?.length >= 4
                                         }">
-                                @if (basicInfoForm.get('phone')?.hasError('required') && basicInfoForm.get('phone')?.touched) {
-                                    <div class="validators">
-                                        <small>¡Este campo es requerido!</small>
-                                    </div>
+                                @if (basicInfoForm.get('phone')?.hasError('required') &&
+                                basicInfoForm.get('phone')?.touched) {
+                                <div class="validators">
+                                    <small>¡Este campo es requerido!</small>
+                                </div>
                                 }
                                 @if (basicInfoForm.get('phone')?.hasError('pattern')) {
-                                    <div class="validators">
-                                        <small>¡Solo se permiten letras!</small>
-                                    </div>
+                                <div class="validators">
+                                    <small>¡Solo se permiten letras!</small>
+                                </div>
                                 }
                             </div>
 
@@ -110,11 +123,12 @@
                             <div class="row action-buttons mt-4 mb-3">
                                 <div class="col-5">
                                     <button type="button" class="btn btn-back btn-sm w-100" (click)="goToLogin()">
-                                        <fa-icon [icon]="iconBack"></fa-icon> Login</button>
+                                        <fa-icon [icon]="iconBack"></fa-icon> LOGIN</button>
                                 </div>
                                 <div class="col-5">
                                     <button type="button" class="btn btn-primary btn-sm w-100" (click)="nextStep()"
-                                        [disabled]="!basicInfoForm.valid">Siguiente <fa-icon [icon]="iconNext"></fa-icon></button>
+                                        [disabled]="!basicInfoForm.valid">SIGUIENTE <fa-icon
+                                            [icon]="iconNext"></fa-icon></button>
                                 </div>
                             </div>
                         </form>
@@ -125,78 +139,88 @@
                         <form [formGroup]="contactForm" class="mt-3">
                             <!--Province-->
                             <div class="mb-3">
-                                <label class="mb-1"><b>Provincia</b></label>
+                                <label class="mb-1"><b>Provinciaaaa</b></label>
                                 <select class="form-select form-select-sm fs-6" [(ngModel)]="optionProvinceSelected"
                                     formControlName="province" [ngClass]="{
                                                 'is-invalid': credentialsForm.get('province')?.hasError('required') && credentialsForm.get('province')?.touched,
                                                 'is-valid': optionProvinceSelected!= ''
-                                                }">
+                                    }" (change)="getOptionProvinceSelected($event)">
                                     <option value="" selected disabled>Seleccione una opción</option>
-                                    <option value="teacher">Profesor(a)</option>
-                                    <option value="student">Estudiante</option>
+                                    @for(province of arrayProvinces; track $index){
+                                    <option [value]="province.id">{{province.name}}</option>
+                                    }
+
                                 </select>
-                                @if (credentialsForm.get('province')?.hasError('required') && credentialsForm.get('province')?.touched) {
-                                    <div class="validators">
-                                        <small>¡Este campo es requerido!</small>
-                                    </div>
+                                @if (credentialsForm.get('province')?.hasError('required') &&
+                                credentialsForm.get('province')?.touched) {
+                                <div class="validators">
+                                    <small>¡Este campo es requerido!</small>
+                                </div>
                                 }
                             </div>
 
-                             <!--Cantón-->
-                             <div class="mb-3">
+                            <!--Cantón-->
+                            <div class="mb-3">
                                 <label class="mb-1"><b>Cantón</b></label>
-                                <select class="form-select form-select-sm fs-6 selectpicker" [(ngModel)]="optionCantonSelected"
-                                    formControlName="cantont" [ngClass]="{
+                                <select class="form-select form-select-sm fs-6 selectpicker"
+                                    [(ngModel)]="optionCantonSelected" formControlName="cantont" [ngClass]="{
                                                 'is-invalid': credentialsForm.get('cantont')?.hasError('required') && credentialsForm.get('cantont')?.touched,
                                                 'is-valid': optionCantonSelected!= ''
-                                                }">
+                                    }" (change)="getOptionCantontSelected($event)">
                                     <option value="" selected disabled>Seleccione una opción</option>
-                                    <option value="teacher">Profesor(a)</option>
-                                    <option value="student">Estudiante</option>
+                                    @for(canton of arrayCantons; track $index){
+                                    <option [value]="canton.id">{{canton.name}}</option>
+                                    }
                                 </select>
-                                @if (credentialsForm.get('cantont')?.hasError('required') && credentialsForm.get('cantont')?.touched) {
-                                    <div class="validators">
-                                        <small>¡Este campo es requerido!</small>
-                                    </div>
+                                @if (credentialsForm.get('cantont')?.hasError('required') &&
+                                credentialsForm.get('cantont')?.touched) {
+                                <div class="validators">
+                                    <small>¡Este campo es requerido!</small>
+                                </div>
                                 }
                             </div>
 
-                             <!--Parroquia-->
-                             <div class="mb-3">
+                            <!--Parroquia-->
+                            <div class="mb-3">
                                 <label class="mb-1"><b>Parroquia</b></label>
-                                <select class="form-select form-select-sm fs-6 selectpicker" [(ngModel)]="optionParishSelected"
-                                    formControlName="parish" [ngClass]="{
+                                <select class="form-select form-select-sm fs-6 selectpicker"
+                                    [(ngModel)]="optionParishSelected" formControlName="parish" [ngClass]="{
                                                 'is-invalid': credentialsForm.get('parish')?.hasError('required') && credentialsForm.get('parish')?.touched,
                                                 'is-valid': optionParishSelected!= ''
-                                                }">
+                                    }" (change)="getOptionParishSelected($event)">
                                     <option value="" selected disabled>Seleccione una opción</option>
-                                    <option value="teacher">Profesor(a)</option>
-                                    <option value="student">Estudiante</option>
+                                    @for(parish of arrayParishes; track $index){
+                                    <option [value]="parish.id">{{parish.name}}</option>
+                                    }
                                 </select>
-                                @if (credentialsForm.get('parish')?.hasError('required') && credentialsForm.get('parish')?.touched) {
-                                    <div class="validators">
-                                        <small>¡Este campo es requerido!</small>
-                                    </div>
+                                @if (credentialsForm.get('parish')?.hasError('required') &&
+                                credentialsForm.get('parish')?.touched) {
+                                <div class="validators">
+                                    <small>¡Este campo es requerido!</small>
+                                </div>
                                 }
                             </div>
 
                             <!--Dirección-->
                             <div class="mb-4">
                                 <label class="mb-1"><b>Dirección</b></label>
-                                <input type="text" class="form-control form-control-sm bg-light fs-6"
-                                    formControlName="address" placeholder="Dirección*" [maxlength]="50" [ngClass]="{
+                                <textarea type="text" rows="3" class="form-control form-control-sm bg-light fs-6"
+                                    formControlName="address" placeholder="Av. Jaime Roldós y 25ava" [maxlength]="50"
+                                    [ngClass]="{
                                         'is-invalid': basicInfoForm.get('address')?.hasError('required') && basicInfoForm.get('address')?.touched || basicInfoForm.get('address')?.hasError('pattern')==true,
                                         'is-valid': basicInfoForm.get('address')?.hasError('required')==false && basicInfoForm.get('address')?.hasError('pattern') == false && basicInfoForm.get('address')?.value?.length >= 4
-                                        }">
-                                @if (basicInfoForm.get('address')?.hasError('required') && basicInfoForm.get('address')?.touched) {
-                                    <div class="validators">
-                                        <small>¡Este campo es requerido!</small>
-                                    </div>
+                                    }">
+                                </textarea>
+                                @if (basicInfoForm.get('address')?.hasError('required') &&
+                                basicInfoForm.get('address')?.touched) {
+                                <div class="validators">
+                                    <small>¡Este campo es requerido!</small>
+                                </div>
                                 }
                                 @if (basicInfoForm.get('address')?.hasError('pattern')) {
-                                    <div class="validators">
-                                        <small>¡Solo se permiten letras!</small>
-                                    </div>
+                                <div class="validators">
+                                    <small>¡Solo se permiten letras!</small>
+                                </div>
                                 }
                             </div>
 
@@ -204,19 +228,97 @@
                             <div class="row action-buttons mt-4 mb-3">
                                 <div class="col-5">
                                     <button type="button" class="btn btn-back btn-sm w-100" matStepperPrevious>
-                                        <fa-icon [icon]="iconBack"></fa-icon> Atrás</button>
+                                        <fa-icon [icon]="iconBack"></fa-icon> ATRÁS</button>
                                 </div>
                                 <div class="col-5">
                                     <button type="button" class="btn btn-primary btn-sm w-100" (click)="nextStep()"
-                                        [disabled]="!basicInfoForm.valid">Siguiente <fa-icon [icon]="iconNext"></fa-icon></button>
+                                        [disabled]="!contactForm.valid">SIGUIENTE <fa-icon
+                                            [icon]="iconNext"></fa-icon></button>
                                 </div>
                             </div>
                         </form>
                     </mat-step>
 
+                    <!--Paso 3 (Credenciales)-->
                     <mat-step>
                         <ng-template matStepLabel>Credenciales</ng-template>
+                        <form [formGroup]="credentialsForm" class="mt-3">
+                            <!--Usuario-->
+                            <div class="mb-3">
+                                <label class="mb-1"><b>Usuario</b></label>
+                                <input type="text" class="form-control form-control-sm bg-light fs-6"
+                                    formControlName="username" placeholder="Jordanfvc26" [maxlength]="50" [ngClass]="{
+                                        'is-invalid': basicInfoForm.get('username')?.hasError('required') && basicInfoForm.get('username')?.touched || basicInfoForm.get('username')?.hasError('pattern')==true,
+                                        'is-valid': basicInfoForm.get('username')?.hasError('required')==false && basicInfoForm.get('username')?.hasError('pattern') == false && basicInfoForm.get('username')?.value?.length >= 4
+                                        }">
+                                @if (basicInfoForm.get('username')?.hasError('required') &&
+                                basicInfoForm.get('username')?.touched) {
+                                <div class="validators">
+                                    <small>¡Este campo es requerido!</small>
+                                </div>
+                                }
+                                @if (basicInfoForm.get('username')?.hasError('pattern')) {
+                                <div class="validators">
+                                    <small>¡Solo se permiten letras!</small>
+                                </div>
+                                }
+                            </div>
 
+                            <!--Correo-->
+                            <div class="mb-3">
+                                <label class="mb-1"><b>Correo</b></label>
+                                <input type="text" class="form-control form-control-sm bg-light fs-6"
+                                    formControlName="email" placeholder="usuario@gmail.com" [maxlength]="50" [ngClass]="{
+                                        'is-invalid': basicInfoForm.get('email')?.hasError('required') && basicInfoForm.get('email')?.touched || basicInfoForm.get('email')?.hasError('pattern')==true,
+                                        'is-valid': basicInfoForm.get('email')?.hasError('required')==false && basicInfoForm.get('email')?.hasError('pattern') == false && basicInfoForm.get('email')?.value?.length >= 4
+                                        }">
+                                @if (basicInfoForm.get('email')?.hasError('required') &&
+                                basicInfoForm.get('email')?.touched) {
+                                <div class="validators">
+                                    <small>¡Este campo es requerido!</small>
+                                </div>
+                                }
+                                @if (basicInfoForm.get('email')?.hasError('pattern')) {
+                                <div class="validators">
+                                    <small>¡Solo se permiten letras!</small>
+                                </div>
+                                }
+                            </div>
+
+                            <!--Contraseña-->
+                            <div class="mb-3">
+                                <label class="mb-1"><b>Contraseña</b></label>
+                                <input type="text" class="form-control form-control-sm bg-light fs-6"
+                                    formControlName="password" placeholder="*******" [maxlength]="10" [ngClass]="{
+                                        'is-invalid': basicInfoForm.get('password')?.hasError('required') && basicInfoForm.get('password')?.touched || basicInfoForm.get('password')?.hasError('pattern')==true,
+                                        'is-valid': basicInfoForm.get('password')?.hasError('required')==false && basicInfoForm.get('password')?.hasError('pattern') == false && basicInfoForm.get('password')?.value?.length >= 4
+                                        }">
+                                @if (basicInfoForm.get('password')?.hasError('required') &&
+                                basicInfoForm.get('password')?.touched) {
+                                <div class="validators">
+                                    <small>¡Este campo es requerido!</small>
+                                </div>
+                                }
+                                @if (basicInfoForm.get('password')?.hasError('pattern')) {
+                                <div class="validators">
+                                    <small>¡Solo se permiten letras!</small>
+                                </div>
+                                }
+                            </div>
+
+                            <!--Botones-->
+                            <div class="row action-buttons mt-4 mb-3">
+                                <div class="col-5">
+                                    <button type="button" class="btn btn-back btn-sm w-100" matStepperPrevious>
+                                        <fa-icon [icon]="iconBack"></fa-icon> ATRÁS</button>
+                                </div>
+                                <div class="col-5">
+                                    <button type="button" class="btn btn-primary btn-sm w-100" (click)="registerUser()"
+                                        [disabled]="!credentialsForm.valid">REGISTRARME <fa-icon
+                                            [icon]="iconNext"></fa-icon></button>
+                                </div>
+                            </div>
+                        </form>
                     </mat-step>
                 </mat-stepper>
             </div>

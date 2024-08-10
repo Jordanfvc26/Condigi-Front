@@ -10,6 +10,10 @@
     height: 100vh;
 }
 
+.side-left{
+    background-color: var(--primary-color);
+}
+
 .container-carousel {
     width: 80%;
     height: 60vh;

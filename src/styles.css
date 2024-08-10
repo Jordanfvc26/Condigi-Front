@@ -48,6 +48,12 @@
 }
 
 
+.btn-back:hover {
+    background-color: var(--gray-dark-color) !important;
+    border-color: var(--gray-dark-color) !important;
+}
+
+
 
 
 html, body { height: 100%; }
