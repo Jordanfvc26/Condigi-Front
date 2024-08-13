@@ -1,0 +1,25 @@
+.title-module {
+    color: var(--gray-dark-color);
+}
+
+.btn-mobile{
+    padding: 5px 12px !important;
+    margin-top: -2px;
+    color: var(--white-color) !important;
+}
+
+.btn-back{
+    color: var(--white-color) !important;
+}
+
+.container{
+    border: 1px solid var(--gray-ligth-four-color);
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.hero-icon>svg{
+    margin-top: -4px;
+    width: 30px;
+    color: var(--primary-color);
+}
