@@ -1,0 +1,49 @@
+.enfasis{
+    color: var(--primary-color)
+}
+
+/*-----------------Estilos para las opciones------------*/
+.card {
+    border: 1px solid var(--gray-ligth-four-color);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+}
+
+.card-icon {
+    max-width: 60px;
+    height: auto;
+}
+
+.card-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.card-text {
+    font-size: 0.9rem;
+    color: var(--gray-dark-color);
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.hero-icon>svg {
+    width: 60px;
+}
+
+
+/*------------------------------Responsive web design------------------------------*/
+/*-----------------------------------Smarthphone-----------------------------------*/
+@media only screen and (max-width: 768px) {
+    .hero-icon>svg {
+        width: 45px;
+    }
+}

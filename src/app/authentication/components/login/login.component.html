@@ -1,13 +1,22 @@
+@if(loaderStatus){
+    <app-loader></app-loader>
+}
+
 <body>
     <div class="row">
         <!--Lado izquierdo con el el carousel de imágenes-->
-        <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 d-flex justify-content-center align-items-center side-left" style="background-color: #f28123;">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 d-flex justify-content-center align-items-center side-left">
             <div class="container-carousel">
                 <nz-carousel nzAutoPlay>
-                    @for (index of arrayImages; track index) {
-                      <div nz-carousel-content class="container-img d-flex justify-content-center align-items-center">
-                        <img [src]="index" alt="imagen"/>
-                      </div>
+                    @for(item of arrayImages; track $index){
+                        <div nz-carousel-content>
+                            <div class="content d-flex flex-column justify-content-center align-items-center">
+                                <h3 class="text-center mb-4">{{ messages[$index] }}</h3>
+                                <div class="container-img">
+                                    <img [src]="item" alt="imagen" [width]="500"/>
+                                </div>
+                            </div>
+                        </div>
                     }
                 </nz-carousel>
             </div>

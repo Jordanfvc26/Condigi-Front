@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
+import { LoaderComponent } from '../../../shared/components/loader/loader.component';
+import { ApiResponseLoginUser, BodyLoginUser } from '../../interfaces/authentication';
+import { AuthenticationService } from '../../services/authentication.service';
+import { ToastAlertsService } from '../../../shared/services/toast-alert.service';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +13,11 @@ import { NzCarouselModule } from 'ng-zorro-antd/carousel';
   imports: [
     FormsModule,
     ReactiveFormsModule,
-    NzCarouselModule
+    NzCarouselModule,
+    LoaderComponent,
+  ],
+  providers: [
+    AuthenticationService
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
@@ -17,14 +25,17 @@ import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 export class LoginComponent {
   //Variables
   loginForm!: FormGroup;
+  loaderStatus: boolean = false;
   showPassword: boolean = false;
-  arrayImages: string[] = ["https://cdn-icons-png.flaticon.com/512/9187/9187604.png", "https://www.iconpacks.net/icons/1/free-user-login-icon-305-thumb.png", "https://static-00.iconduck.com/assets.00/user-login-icon-487x512-xx4t1c61.png"];
+  arrayImages: string[] = ["../../../../assets/images/IMG_Contract.svg", "../../../../assets/images/IMG_Send_mail.svg", "../../../../assets/images/IMG_Security.svg", "../../../../assets/images/IMG_Organize.svg", "../../../../assets/images/IMG_All_devices.svg"];
+  messages: string[] = ["Genera contratos con IA", "Envía tus contratos por email", "Encripta tus contratos", "Gestiona y organiza", "Accede desde cualquier dispositivo"];
 
   //constructor
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    //private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private toastr: ToastAlertsService
   ) { }
 
   //ngOnInit
@@ -42,20 +53,31 @@ export class LoginComponent {
 
   //Método que inicia la sesión del usuario
   loginUser() {
-    /* let body : BodyLogin = {
+    this.loaderStatus = true;
+    let body: BodyLoginUser = {
       username: this.loginForm.get('user')?.value,
       password: this.loginForm.get('password')?.value
     }
     this.authenticationService.loginUser(body).subscribe({
-      next: (response: ApiResponse<DataResponseLogin>) => {
-        alert('Sesión iniciada correctamente');
-        let token = response.data?.token ?? '';
-        localStorage.setItem('token', token);
+      next: (data: ApiResponseLoginUser) => {
+        this.loaderStatus = false;
+        if (data.statusCode == 200) {
+          this.toastr.showToastSuccess("Inicio de sesión exitoso", "Bienvenido")
+          this.router.navigateByUrl('user/dashboard');
+          sessionStorage.setItem('token', data.data.token);
+          sessionStorage.setItem('typeUser', data.data.user.role);
+          sessionStorage.setItem('userName', data.data.user.name);
+          sessionStorage.setItem('emailUser', data.data.user.email);
+        }
+        else{
+          this.toastr.showToastError("Error", "Credenciales incorrectas");
+        }
       },
       error: () => {
-        alert('Error al iniciar sesión');
+        this.loaderStatus = false;
+        this.toastr.showToastError("Error", "Credenciales incorrectas");
       }
-    }) */
+    })
   }
 
   //Método para obtener el tipo de entrada de contraseña según la visibilidad
@@ -69,11 +91,11 @@ export class LoginComponent {
   }
 
   //Método para recuperar la contraseña
-  forgotPassword(){
+  forgotPassword() {
   }
 
   //Método que redirige al formulario de registro
-  goToRegisterUser(){
+  goToRegisterUser() {
     this.router.navigateByUrl(`/authentication/register-user`);
   }
 }

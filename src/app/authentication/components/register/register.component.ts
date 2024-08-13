@@ -2,10 +2,14 @@ import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
-import {MatStepper, MatStepperModule} from '@angular/material/stepper';
+import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import * as iconos from '@fortawesome/free-solid-svg-icons';
 import { CommonModule } from '@angular/common';
+import { AuthenticationService } from '../../services/authentication.service';
+import { ApiResponseGetGeographyI, InfoGeographyI } from '../../interfaces/geography';
+import { LoaderComponent } from '../../../shared/components/loader/loader.component';
+import { ApiResponseRegisterUserI, BodyRegisterUserI } from '../../interfaces/authentication';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +20,11 @@ import { CommonModule } from '@angular/common';
     ReactiveFormsModule,
     NzCarouselModule,
     MatStepperModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    LoaderComponent
+  ],
+  providers: [
+    AuthenticationService
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css', './../login/login.component.css']
@@ -24,23 +32,35 @@ import { CommonModule } from '@angular/common';
 export class RegisterComponent {
   //Variables
   @ViewChild('stepper') stepper!: MatStepper;
+  loaderStatus: boolean = false;
   basicInfoForm!: FormGroup;
   contactForm!: FormGroup;
   credentialsForm!: FormGroup;
   showPassword: boolean = false;
-  arrayImages: string[] = ["https://cdn-icons-png.flaticon.com/512/9187/9187604.png", "https://www.iconpacks.net/icons/1/free-user-login-icon-305-thumb.png", "https://static-00.iconduck.com/assets.00/user-login-icon-487x512-xx4t1c61.png"];
+  arrayImages: string[] = ["../../../../assets/images/IMG_Contract.svg", "../../../../assets/images/IMG_Send_mail.svg", "../../../../assets/images/IMG_Security.svg", "../../../../assets/images/IMG_Organize.svg", "../../../../assets/images/IMG_All_devices.svg"];
+  messages: string[] = ["Genera contratos con IA", "Envía tus contratos por email", "Encripta tus contratos", "Gestiona y organiza", "Accede desde cualquier dispositivo"];
+
+  optionProvinceSelected: string = "";
+  optionCantonSelected: string = "";
+  optionParishSelected: string = "";
+
+  arrayProvinces: InfoGeographyI[] = [];
+  arrayCantons: InfoGeographyI[] = [];
+  arrayParishes: InfoGeographyI[] = [];
 
   //constructor
   constructor(
     private router: Router,
-    private formBuilder: FormBuilder
-  ){}
+    private formBuilder: FormBuilder,
+    private authenticationService: AuthenticationService
+  ) { }
 
   //ngOnInit
-  ngOnInit(){
+  ngOnInit() {
     this.createBasicInfoForm();
     this.createContactForm();
     this.createCredentialsForm();
+    this.getProvinces();
   }
 
   //Método que crea el formulario del información básica
@@ -82,10 +102,6 @@ export class RegisterComponent {
     this.showPassword = !this.showPassword;
   }
 
-  //Método para recuperar la contraseña
-  forgotPassword() {
-  }
-
   //Método que redirige al formulario de Login
   goToLogin() {
     this.router.navigateByUrl(`/authentication/login`);
@@ -94,6 +110,109 @@ export class RegisterComponent {
   //Método que para avanzar al siguiente paso del stepper
   nextStep() {
     this.stepper.next();
+  }
+
+  //Método que consume el servicio para obtener las provincias del Ecuador
+  getProvinces() {
+    this.loaderStatus = true;
+    this.authenticationService.getProvinces().subscribe({
+      next: (data: ApiResponseGetGeographyI) => {
+        this.loaderStatus = false;
+        this.arrayProvinces = data.data;
+      },
+      error: (error) => {
+        this.loaderStatus = false;
+        alert(error);
+      }
+    });
+  }
+
+  //Método que consume el servicio para obtener los cantones de una provincia
+  getCantons(provinceID: number) {
+    this.loaderStatus = true;
+    this.authenticationService.getCantonts(provinceID).subscribe({
+      next: (data: ApiResponseGetGeographyI) => {
+        this.loaderStatus = false;
+        this.arrayCantons = data.data;
+      },
+      error: (error) => {
+        this.loaderStatus = false;
+        alert(error);
+      }
+    });
+  }
+
+  //Método que consume el servicio para obtener las parroquias de un cantón
+  getParishes(cantontID: number) {
+    this.loaderStatus = true;
+    this.authenticationService.getParishes(cantontID).subscribe({
+      next: (data: ApiResponseGetGeographyI) => {
+        this.loaderStatus = false;
+        this.arrayParishes = data.data;
+      },
+      error: (error) => {
+        this.loaderStatus = false;
+        alert(error);
+      }
+    });
+  }
+
+
+  //Método que obtiene el valor de la provincia seleccionada
+  getOptionProvinceSelected(e: any) {
+    this.optionProvinceSelected = e.target.value;
+    this.getCantons(e.target.value);
+  }
+
+  //Método que obtiene el valor de la provincia seleccionada
+  getOptionCantontSelected(e: any) {
+    this.optionCantonSelected = e.target.value;
+    this.getParishes(e.target.value);
+  }
+
+  //Método que obtiene el valor de la provincia seleccionada
+  getOptionParishSelected(e: any) {
+    this.optionParishSelected = e.target.value;
+  }
+
+
+  //Método que arma el body para registrar al usuario
+  fillBodyToRegisterUser() {
+    let body: BodyRegisterUserI = {
+      person: {
+        firstName: this.basicInfoForm.get('firstName')?.value,
+        lastName: this.basicInfoForm.get('lastName')?.value,
+        identification: this.basicInfoForm.get('identification')?.value,
+        phone: this.basicInfoForm.get('phone')?.value,
+        parishId: Number(this.optionParishSelected),
+        address: this.contactForm.get('address')?.value,
+      },
+      user: {
+        username: this.credentialsForm.get('username')?.value,
+        email: this.credentialsForm.get('email')?.value,
+        password: this.credentialsForm.get('password')?.value,
+        userType: 0
+      }
+    };
+    return body
+  }
+
+  //Método que registra al usuario
+  registerUser() {
+    this.loaderStatus = true;
+    this.authenticationService.registerUser(this.fillBodyToRegisterUser()).subscribe({
+      next: (data: ApiResponseRegisterUserI) => {
+        this.loaderStatus = false;
+        if(data.statusCode === 201)
+          this.router.navigateByUrl(`/authentication/login`);
+        else
+          alert("Error al registrar el usuario");
+      },
+      error: (error) => {
+        this.loaderStatus = false;
+        alert("Error al registrar el usuario 2");
+      }
+    })
   }
 
   //Icons to use

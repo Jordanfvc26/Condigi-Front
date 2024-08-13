@@ -1,3 +1,54 @@
-.validators{
+.validators {
     color: var(--cancel-color);
+}
+
+.form-select-sm {
+    padding: 5px;
+    border-radius: 8px !important;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.container-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    width: 300px;
+}
+
+.container-img>img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+::ng-deep .mat-step-header .mat-step-icon {
+    background-color: var(--primary-color) !important;
+}
+
+.carousel-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+[nz-carousel-content] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
 }
