@@ -5,6 +5,7 @@ import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 import { LoaderComponent } from '../../../shared/components/loader/loader.component';
 import { ApiResponseLoginUser, BodyLoginUser } from '../../interfaces/authentication';
 import { AuthenticationService } from '../../services/authentication.service';
+import { ToastAlertsService } from '../../../shared/services/toast-alert.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ import { AuthenticationService } from '../../services/authentication.service';
     FormsModule,
     ReactiveFormsModule,
     NzCarouselModule,
-    LoaderComponent
+    LoaderComponent,
   ],
   providers: [
     AuthenticationService
@@ -33,7 +34,8 @@ export class LoginComponent {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private toastr: ToastAlertsService
   ) { }
 
   //ngOnInit
@@ -60,14 +62,20 @@ export class LoginComponent {
       next: (data: ApiResponseLoginUser) => {
         this.loaderStatus = false;
         if (data.statusCode == 200) {
-          alert('Sesión iniciada correctamente');
+          this.toastr.showToastSuccess("Inicio de sesión exitoso", "Bienvenido")
+          this.router.navigateByUrl('user/dashboard');
           sessionStorage.setItem('token', data.data.token);
           sessionStorage.setItem('typeUser', data.data.user.role);
+          sessionStorage.setItem('userName', data.data.user.name);
+          sessionStorage.setItem('emailUser', data.data.user.email);
+        }
+        else{
+          this.toastr.showToastError("Error", "Credenciales incorrectas");
         }
       },
       error: () => {
         this.loaderStatus = false;
-        alert('Error al iniciar sesión');
+        this.toastr.showToastError("Error", "Credenciales incorrectas");
       }
     })
   }

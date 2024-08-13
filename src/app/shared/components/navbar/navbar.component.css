@@ -1,0 +1,76 @@
+.navbar {
+  background-color: var(--primary-color);
+}
+
+.app-name>h4{
+  color: var(--white-color);
+}
+
+.container-profile-photo>img {
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.username>label{
+  cursor: pointer;
+}
+
+
+/*-------------Para el submenú que se despliega-----------*/
+.container-info-user {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  min-width: 200px;
+  background-color: var(--white-color);
+  border: 1px solid var(--gray-ligth-four-color);
+  border-radius: 7px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: 10px
+}
+
+.dropdown-menu .dropdown-item {
+  color: #333;
+  text-decoration: none;
+}
+
+.dropdown-menu .dropdown-item:hover {
+  background-color: var(--gray-ligth-five-color);
+  border-radius: 7px;
+  cursor: pointer;
+  color: var(--primary-color);
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+/* Estilo para el triángulo */
+.dropdown-arrow {
+  position: absolute;
+  top: -10px;
+  right: 15px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid var(--white-color);
+  z-index: 1001;
+}
+
+.info-user>small{
+  color: var(--gray-dark-color);
+}
+
+.hero-icon>svg{
+  width: 15px;
+}
+
+.icon-log-out{
+  color: var(--cancel-color);
+}
