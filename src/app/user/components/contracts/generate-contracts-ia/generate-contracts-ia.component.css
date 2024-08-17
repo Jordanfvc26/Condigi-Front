@@ -1,0 +1,12 @@
+.container-form{
+    border: 1px solid var(--gray-ligth-four-color);
+    border-radius: 8px;
+}
+
+.validators{
+    color: var(--cancel-color);
+}
+
+::ng-deep .mat-step-header .mat-step-icon {
+    background-color: var(--primary-color) !important;
+}
