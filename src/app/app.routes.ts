@@ -2,6 +2,9 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './authentication/components/login/login.component';
 import { RegisterComponent } from './authentication/components/register/register.component';
 import { DashboardComponent } from './shared/components/dashboard/dashboard.component';
+import { ListCompaniesComponent } from './user/components/my-companies/list-companies/list-companies.component';
+import { CreateCompanyComponent } from './user/components/my-companies/create-company/create-company.component';
+
 
 export const routes: Routes = [
     { path: '', redirectTo: 'authentication', pathMatch: 'full' },
@@ -17,6 +20,8 @@ export const routes: Routes = [
         path: 'user',
         children: [
             { path: 'dashboard', component: DashboardComponent },
+            { path: 'my-companies/list-companies', component: ListCompaniesComponent },
+            { path: 'my-companies/new-company', component: CreateCompanyComponent },
             { path: '', redirectTo: 'user', pathMatch: 'full' },
         ]
     },

@@ -1,0 +1,108 @@
+<!--Filtro, búsqueda y exportación de documentos-->
+<div class="row">
+    @if(showOptionsHeaderTable){
+        <!--Buscar registro-->
+        <div class="col-8 col-md-4 col-lg-4 mb-3">
+            <label class="mb-1"><b>Buscar por {{searchByDescription}}</b></label>
+            <form>
+                <input class="form-control me-1" type="text" placeholder="Buscar..." name="buscarRegistro"
+                    [(ngModel)]="dataToSearch">
+            </form>
+        </div>
+
+        <!--Importar los datos de la tabla a Excel-->
+        <div class="col-4 col-md-8 col-lg-8 export-buttons justify-content-between mb-3">
+            <button (click)="downloadXLSX()" type="button" class="btn save-xlsx" matTooltip="Exportar a Excel"
+                matTooltipPosition="above">
+                <fa-icon [icon]="iconXlsx"></fa-icon>
+            </button>
+
+            <button (click)="goToCreateNewRegister()" type="button" class="btn save-pdf">
+                <fa-icon [icon]="iconAdd"></fa-icon> {{isMobileView ? '' : 'NUEVO'}}
+            </button>
+        </div>
+    }
+</div>
+
+<!--Tabla con datos-->
+<div class="card">
+    <div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true" style="position: relative;">
+        <table class="table table-striped mb-0" id="htmlExcelTable">
+            <!--Cabecera (Columnas)-->
+            <thead>
+                <tr>
+                    <th scope="col">N°</th>
+                    @for(column of columns; track $index){
+                        <th scope="col">{{column}}</th>
+                    }
+                    @if(actions.length != 0){
+                        <th scope="col">Acciones</th>
+                    }
+                </tr>
+            </thead>
+            <!--Cuerpo de la tabla (data)-->
+            <tbody>
+                @if(data.length != 0){
+                    @for(content of data | slice:initialPage:finalPage | searchRegisters:dataToSearch:searchBy; track $index){
+                    <tr>
+                        <th scope="row">{{$index + 1}}</th>
+                        @for(row of columnsFilter; track $index) {
+                            @if(content[row] != null){
+                                <td>{{content[row]}}</td>
+                            }
+                            @else {
+                                <td>---</td>
+                            }
+                        }
+                        <!--Acciones de la tabla-->
+                        @if(actions.length != 0){
+                            <td>
+                                @for(option of actions; track $index) {
+                                    @if(option.icon === 'iconViewDetails'){
+                                        <fa-icon [matTooltip]="option.action" matTooltipPosition="below"
+                                            [icon]="iconViewDetails" id="iconViewDetails">
+                                        </fa-icon>
+                                    }
+                                    @if(option.icon == 'iconEdit'){
+                                        <fa-icon [matTooltip]="option.action" matTooltipPosition="below"
+                                            [icon]="iconEdit" id="iconEdit">
+                                        </fa-icon>
+                                    }
+                                    @if(option.icon == 'iconDelete'){
+                                        <fa-icon [matTooltip]="option.action" matTooltipPosition="below" 
+                                            [icon]="iconDelete" id="iconDelete">
+                                        </fa-icon>
+                                    }
+                                }
+                            </td>
+                        }
+                    </tr>
+                    }
+                }
+                @else{
+                <tr>
+                    <td [colSpan]="columnsFilter.length + 2" class="text-center">
+                        <div class="info">
+                            <div class="icon-hero">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1"
+                                    stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 0 0-1.883 2.542l.857 6a2.25 2.25 0 0 0 2.227 1.932H19.05a2.25 2.25 0 0 0 2.227-1.932l.857-6a2.25 2.25 0 0 0-1.883-2.542m-16.5 0V6A2.25 2.25 0 0 1 6 3.75h3.879a1.5 1.5 0 0 1 1.06.44l2.122 2.12a1.5 1.5 0 0 0 1.06.44H18A2.25 2.25 0 0 1 20.25 9v.776" />
+                                </svg>
+                            </div>
+                            <p>Aún no existen resultados para mostrar...</p>
+                        </div>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!--Paginación-->
+    @if(showPaginator){
+        <mat-paginator id="paginacion" [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="itemsForPage"
+            [length]="data.length" (page)="changePage($event)">
+        </mat-paginator>
+    }
+</div>

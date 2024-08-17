@@ -1,0 +1,119 @@
+table td,
+table th {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+thead th {
+    background-color: var(--secondary-color) !important;
+    color: var(--white-color) !important;
+}
+
+.card {
+    border-radius: .2rem;
+}
+
+.table-scroll {
+    border-radius: .2rem;
+}
+
+.table-scroll table thead th {
+    font-size: .9rem;
+}
+
+th,
+td {
+    font-size: .8rem;
+}
+
+thead {
+    top: 0;
+    position: sticky;
+}
+
+.no-results {
+    text-align: center;
+    background-color: var(--gray-ligth-five-color);
+}
+
+.save-xlsx,
+.save-pdf {
+    background-color: transparent;
+    border: 1px solid var(--primary-color) !important;
+    color: var(--primary-color) !important;
+}
+
+.save-pdf{
+    margin-left: 10px;
+}
+
+.export-buttons{
+    display: flex;
+    align-items: end;
+}
+
+#iconViewDetails {
+    font-size: 1rem !important;
+    margin-right: 12px;
+    cursor: pointer;
+    color: var(--info-color) !important;
+}
+
+#iconEdit {
+    font-size: 1rem !important;
+    margin-right: 12px;
+    cursor: pointer;
+    color: var(--primary-color) !important;
+}
+
+#iconDelete {
+    font-size: 1rem !important;
+    margin-right: 12px;
+    cursor: pointer;
+    color: var(--cancel-color) !important;
+}
+
+#iconViewMore{
+    font-size: 1rem !important;
+    margin-right: 12px;
+    cursor: pointer;
+    color: var(--third-color) !important;
+}
+
+.icon-hero>svg{
+    width: 40px;
+    height: 40px;
+    color: var(--gray-ligth-one-color)
+}
+
+.info>p{
+    color: var(--gray-ligth-one-color)
+}
+
+#htmlExcelTable td:nth-child(2),
+#htmlExcelTable th:nth-child(2) {
+  max-width: 200px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  position: relative !important;
+}
+
+/*------------------------------Responsive Web Desgin-------------------------------*/
+/*-----------------------------------Smarthphone-----------------------------------*/
+@media only screen and (max-width: 768px) {
+    .save-xlsx{
+        margin-left: -10px;
+    }
+
+    .save-pdf{
+        margin-left: 10px;
+    }
+
+    .export-buttons{
+        display: flex;
+        justify-content: space-evenly;
+        align-items: end;
+    }
+}
