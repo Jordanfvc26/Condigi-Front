@@ -3,7 +3,7 @@ import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { HeadersService } from '../../shared/services/headers.service';
 import { Observable } from 'rxjs';
-import { ApiResponseGetCompaniesByUserI } from '../interfaces/companies';
+import { ApiResponseCreateCompanyI, ApiResponseGetCompaniesByUserI, BodyCreateCompanyI } from '../interfaces/companies';
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +31,11 @@ export class CompaniesService {
   getCompaniesByUser(currentPage: number, pageSize: number): Observable<ApiResponseGetCompaniesByUserI> {
     this.options = this.headersService.getHeaders(this.getHeaders());
     return this.http.get<ApiResponseGetCompaniesByUserI>(this.urlApi + `/companies?currentPage=${currentPage}&pageSize=${pageSize}`, this.options);
+  }
+
+  //Método que consume la API para crear una nueva empresa
+  createCompany(body: BodyCreateCompanyI): Observable<ApiResponseCreateCompanyI> {
+    this.options = this.headersService.getHeaders(this.getHeaders());
+    return this.http.post<ApiResponseCreateCompanyI>(this.urlApi + `/users/create-company`, body, this.options);
   }
 }

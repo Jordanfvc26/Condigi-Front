@@ -26,8 +26,8 @@ export class ListCompaniesComponent {
   //Variables
   loaderStatus: boolean = false;
   compnayID: number = 0;
-  columns: string[] = ["Nombre", "Descripción", "RUC", "Fecha de registro"];
-  columnsFilter: string[] = ["companyName", "description", "ruc", "createdAt"];
+  columns: string[] = ["Nombre", "RUC", "Teléfono", "Correo", "Estado", "Fecha de registro"];
+  columnsFilter: string[] = ["companyName", "ruc", "phone", "email", "status", "createdAt"];
   dataCompanies: any[] = [];
   actions: any[] = [
     {

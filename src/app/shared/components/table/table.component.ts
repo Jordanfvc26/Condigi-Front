@@ -37,6 +37,7 @@ export class TableComponent {
   @Input() urlViewMore: string = "";
   @Input() excelName: string = "";
   @Input() searchBy: string = "";
+  @Input() urlGoToCreateNewRegister: string = "";
   @Input() showOptionsHeaderTable = true;
   @Input() showPaginator: boolean = true;
   @Output() deleteItem = new EventEmitter<boolean>();
@@ -114,7 +115,10 @@ export class TableComponent {
     }
   }
 
-
+  //Método que redirecciona al componente de crear un nuevo registro
+  goToCreateNewRegister(){
+    this.router.navigateByUrl(this.urlGoToCreateNewRegister);
+  }
 
 
   //Icons to use

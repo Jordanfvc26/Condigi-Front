@@ -15,3 +15,20 @@ export interface DataCompanyI {
     description: string;
     status: boolean;
 }
+
+//Interfaz con el body requerido para crear una empresa
+export interface BodyCreateCompanyI {
+    name: string;
+    ruc: string;
+    address: string;
+    phone: string;
+    email: string;
+    parishId: number;
+}
+
+//Interfaz de respuesta de la API para cuando se crea una empresa
+export interface ApiResponseCreateCompanyI {
+    data: boolean;
+    message: string;
+    statusCode: number;
+}

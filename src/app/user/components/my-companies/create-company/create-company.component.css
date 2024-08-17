@@ -1,0 +1,9 @@
+.container-form{
+    padding: 15px;
+    border: 1px solid var(--gray-ligth-four-color);
+    border-radius: 8px;
+}
+
+.validators{
+    color: var(--cancel-color);
+}
