@@ -40,7 +40,9 @@ export class GenerateContractsIAComponent {
   @ViewChild('stepper') stepper!: MatStepper;
   loaderStatus: boolean = false;
   contractForm!: FormGroup;
+  optionTypeContractSelected: string = "";
   optionCompanySelected: string = "";
+  optionCompanyReceibedSelected: string = "";
   arrayMyCompanies: any[] = [];
   arrayTypeContracts: any[] = [];
   editor!: Editor;

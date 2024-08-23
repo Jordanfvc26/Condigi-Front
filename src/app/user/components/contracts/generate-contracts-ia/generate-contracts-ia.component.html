@@ -25,10 +25,10 @@
                             <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                 <div class="mb-3">
                                     <label class="mb-1"><b>Tipo de contrato</b></label>
-                                    <select class="form-select form-select-sm fs-6" [(ngModel)]="optionCompanySelected"
+                                    <select class="form-select form-select-sm fs-6" [(ngModel)]="optionTypeContractSelected"
                                         formControlName="contractTypeId" [ngClass]="{
                                                     'is-invalid': contractForm.get('contractTypeId')?.hasError('required') && contractForm.get('contractTypeId')?.touched,
-                                                    'is-valid': optionCompanySelected!= ''
+                                                    'is-valid': optionTypeContractSelected!= ''
                                         }" (change)="getOptionCompanySelected($event)">
                                         <option value="" selected disabled>Seleccione una opción</option>
                                         @for(contract of arrayTypeContracts; track $index){
@@ -158,10 +158,10 @@
                             <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
                                 <div class="mb-3">
                                     <label class="mb-1"><b>Empresa receptora</b></label>
-                                    <select class="form-select form-select-sm fs-6" [(ngModel)]="optionCompanySelected"
+                                    <select class="form-select form-select-sm fs-6" [(ngModel)]="optionCompanyReceibedSelected"
                                         formControlName="receiverCompanyId" [ngClass]="{
                                                     'is-invalid': contractForm.get('receiverCompanyId')?.hasError('required') && contractForm.get('receiverCompanyId')?.touched,
-                                                    'is-valid': optionCompanySelected!= ''
+                                                    'is-valid': optionCompanyReceibedSelected!= ''
                                         }" (change)="getOptionCompanySelected($event)">
                                         <option value="" selected disabled>Seleccione una opción</option>
                                         @for(company of arrayMyCompanies; track $index){
