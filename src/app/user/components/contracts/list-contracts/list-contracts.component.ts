@@ -54,7 +54,7 @@ export class ListContractsComponent {
   actions: any[] = [
     {
       icon: "iconViewDetails",
-      action: "Ver asistentes"
+      action: "Ver detalles"
     },
     {
       icon: "iconEdit",

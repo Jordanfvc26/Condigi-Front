@@ -32,3 +32,14 @@ export interface ApiResponseCreateCompanyI {
     message: string;
     statusCode: number;
 }
+
+
+//Interfaz con el body requerido cuando es una empresa sin registrar a la que se envía el contrato
+export interface ReceiverCompanyI {
+    name: string;
+    email: string;
+    address: string;
+    phone: string;
+    parishId: string;
+    ruc: string;
+}

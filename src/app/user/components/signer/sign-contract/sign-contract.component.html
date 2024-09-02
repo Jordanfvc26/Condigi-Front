@@ -1,0 +1,19 @@
+@if(loaderStatus){
+    <app-loader></app-loader>
+}
+
+<body>
+    <!--NavBar-->
+    <app-navbar></app-navbar>
+
+    <!--Título del módulo-->
+    <div class="container title-module mt-5">
+        <app-header-back [titleModule]="'Firmador de documentos'" [urlBack]="'/user/dashboard'"></app-header-back>
+    </div>
+
+    <!--Tabla con el listado de compañías-->
+    <div class="container mt-5">
+        <docuseal-form src="https://docuseal.co/d/VcMthrAydE3Jfp" email="jverac12@uteq.edu.ec">
+        </docuseal-form>
+    </div>
+</body>

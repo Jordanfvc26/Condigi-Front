@@ -1,0 +1,200 @@
+@if(loaderStatus){
+    <app-loader></app-loader>
+}
+
+<body>
+    <!--Título del modal-->
+    <div class="row title-modal d-flex justify-content-between">
+        <div class="col-10 col-md-11 col-lg-11 col-xl-11 title d-flex">
+            <fa-icon [icon]="iconCompany" class="fs-4"></fa-icon>
+            <h5 class="mt-1">&nbsp;&nbsp;<b>Empresa receptora del contrato</b></h5>
+        </div>
+        <div class="col-2 col-md-1 col-lg-1 col-xl-1 close-modal">
+            <fa-icon [icon]="iconClose" class="fs-4 icon-close" (click)="closeModal()"></fa-icon>
+        </div>
+    </div>
+
+
+    <!--Body del modal-->
+    <div class="row mb-3">
+        <form [formGroup]="companyForm" class="mt-2">
+
+            <!--Nombre y RUC-->
+            <div class="row">
+                <!--Nombre de la empresa-->
+                <div class="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9">
+                    <div class="mb-3">
+                        <label class="mb-1"><b>Nombre</b></label>
+                        <input type="text" class="form-control form-control-sm bg-light fs-6" formControlName="name"
+                            placeholder="Bimbocode S.A." [maxlength]="100" [ngClass]="{
+                            'is-invalid': companyForm.get('name')?.hasError('required') && companyForm.get('name')?.touched || companyForm.get('name')?.hasError('pattern')==true,
+                            'is-valid': !companyForm.get('name')?.hasError('required') && !companyForm.get('name')?.hasError('pattern') && companyForm.get('name')?.value?.length >= 1
+                            }">
+                        @if (companyForm.get('name')?.hasError('required') && companyForm.get('name')?.touched) {
+                            <div class="validators">
+                                <small>¡Este campo es requerido!</small>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <!--RUC de la empresa-->
+                <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
+                    <div class="mb-3">
+                        <label class="mb-1"><b>RUC</b></label>
+                        <input type="text" class="form-control form-control-sm bg-light fs-6" formControlName="ruc"
+                            placeholder="1234567890001" [maxlength]="13" [ngClass]="{
+                            'is-invalid': companyForm.get('ruc')?.hasError('required') && companyForm.get('ruc')?.touched || companyForm.get('ruc')?.hasError('pattern')==true,
+                            'is-valid': !companyForm.get('ruc')?.hasError('required') && !companyForm.get('ruc')?.hasError('pattern') && companyForm.get('ruc')?.value?.length >= 1
+                            }">
+                        @if (companyForm.get('ruc')?.hasError('required') && companyForm.get('ruc')?.touched) {
+                            <div class="validators">
+                                <small>¡Este campo es requerido!</small>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!--Información de la dirección-->
+            <div class="row">
+                <!--Province-->
+                <div class="col-4">
+                    <div class="mb-3">
+                        <label class="mb-1"><b>Provincia</b></label>
+                        <select class="form-select form-select-sm fs-6" [(ngModel)]="optionProvinceSelected"
+                            formControlName="province" [ngClass]="{
+                                        'is-invalid': companyForm.get('province')?.hasError('required') && companyForm.get('province')?.touched,
+                                        'is-valid': optionProvinceSelected!= ''
+                            }" (change)="getOptionProvinceSelected($event)">
+                            <option value="" selected disabled>Seleccione una opción</option>
+                            @for(province of arrayProvinces; track $index){
+                            <option [value]="province.id">{{province.name}}</option>
+                            }
+
+                        </select>
+                        @if (companyForm.get('province')?.hasError('required') &&
+                        companyForm.get('province')?.touched) {
+                        <div class="validators">
+                            <small>¡Este campo es requerido!</small>
+                        </div>
+                        }
+                    </div>
+                </div>
+                
+                <!--Cantón-->
+                <div class="col-4">
+                    <div class="mb-3">
+                        <label class="mb-1"><b>Cantón</b></label>
+                        <select class="form-select form-select-sm fs-6 selectpicker"
+                            [(ngModel)]="optionCantonSelected" formControlName="cantont" [ngClass]="{
+                                        'is-invalid': companyForm.get('cantont')?.hasError('required') && companyForm.get('cantont')?.touched,
+                                        'is-valid': optionCantonSelected!= ''
+                            }" (change)="getOptionCantontSelected($event)">
+                            <option value="" selected disabled>Seleccione una opción</option>
+                            @for(canton of arrayCantons; track $index){
+                                <option [value]="canton.id">{{canton.name}}</option>
+                            }
+                        </select>
+                        @if (companyForm.get('cantont')?.hasError('required') && companyForm.get('cantont')?.touched) {
+                            <div class="validators">
+                                <small>¡Este campo es requerido!</small>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <!--Parroquia-->
+                <div class="col-4">
+                    <div class="mb-3">
+                        <label class="mb-1"><b>Parroquia</b></label>
+                        <select class="form-select form-select-sm fs-6 selectpicker"
+                            [(ngModel)]="optionParishSelected" formControlName="parish" [ngClass]="{
+                                        'is-invalid': companyForm.get('parish')?.hasError('required') && companyForm.get('parish')?.touched,
+                                        'is-valid': optionParishSelected!= ''
+                            }" (change)="getOptionParishSelected($event)">
+                            <option value="" selected disabled>Seleccione una opción</option>
+                            @for(parish of arrayParishes; track $index){
+                                <option [value]="parish.id">{{parish.name}}</option>
+                            }
+                        </select>
+                        @if (companyForm.get('parish')?.hasError('required') && companyForm.get('parish')?.touched) {
+                            <div class="validators">
+                                <small>¡Este campo es requerido!</small>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!--Dirección-->
+            <div class="row">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label class="mb-1"><b>Dirección</b></label>
+                        <textarea type="text" rows="3" class="form-control form-control-sm bg-light fs-6"
+                            formControlName="address" placeholder="Av. Jaime Roldós y 25ava" [maxlength]="50"
+                            [ngClass]="{
+                                'is-invalid': companyForm.get('address')?.hasError('required') && companyForm.get('address')?.touched || companyForm.get('address')?.hasError('pattern')==true,
+                                'is-valid': companyForm.get('address')?.hasError('required')==false && companyForm.get('address')?.hasError('pattern') == false && companyForm.get('address')?.value?.length >= 4
+                            }">
+                        </textarea>
+                        @if (companyForm.get('address')?.hasError('required') &&
+                        companyForm.get('address')?.touched) {
+                        <div class="validators">
+                            <small>¡Este campo es requerido!</small>
+                        </div>
+                        }
+                        @if (companyForm.get('address')?.hasError('pattern')) {
+                        <div class="validators">
+                            <small>¡Solo se permiten letras!</small>
+                        </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!--Correo y teléfono de la empresa-->
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9">
+                    <div class="mb-3">
+                        <label class="mb-1"><b>Correo</b></label>
+                        <input type="text" class="form-control form-control-sm bg-light fs-6" formControlName="email"
+                            placeholder="soporte@bimbocode.com" [maxlength]="80" [ngClass]="{
+                            'is-invalid': companyForm.get('email')?.hasError('required') && companyForm.get('email')?.touched || companyForm.get('email')?.hasError('pattern')==true,
+                            'is-valid': !companyForm.get('email')?.hasError('required') && !companyForm.get('email')?.hasError('pattern') && companyForm.get('email')?.value?.length >= 1
+                            }">
+                        @if (companyForm.get('email')?.hasError('required') && companyForm.get('email')?.touched) {
+                            <div class="validators">
+                                <small>¡Este campo es requerido!</small>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
+                    <div class="mb-3">
+                        <label class="mb-1"><b>Teléfono</b></label>
+                        <input type="text" class="form-control form-control-sm bg-light fs-6" formControlName="phone"
+                            placeholder="09876543210" [maxlength]="10" [ngClass]="{
+                            'is-invalid': companyForm.get('phone')?.hasError('required') && companyForm.get('phone')?.touched || companyForm.get('phone')?.hasError('pattern')==true,
+                            'is-valid': !companyForm.get('phone')?.hasError('required') && !companyForm.get('phone')?.hasError('pattern') && companyForm.get('phone')?.value?.length >= 1
+                            }">
+                        @if (companyForm.get('phone')?.hasError('required') && companyForm.get('phone')?.touched) {
+                            <div class="validators">
+                                <small>¡Este campo es requerido!</small>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!--Footer del modal-->
+    <div class="row button footer-modal d-flex justify-content-end">
+        <div class="col-auto">
+            <button class="btn btn-primary" [disabled]="!companyForm.valid" (click)="addCompany()">ACEPTAR</button>
+        </div>
+    </div>
+</body>

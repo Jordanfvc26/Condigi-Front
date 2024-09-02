@@ -6,6 +6,7 @@ import { ListCompaniesComponent } from './user/components/my-companies/list-comp
 import { CreateCompanyComponent } from './user/components/my-companies/create-company/create-company.component';
 import { ListContractsComponent } from './user/components/contracts/list-contracts/list-contracts.component';
 import { GenerateContractsIAComponent } from './user/components/contracts/generate-contracts-ia/generate-contracts-ia.component';
+import { SignContractComponent } from './user/components/signer/sign-contract/sign-contract.component';
 
 
 export const routes: Routes = [
@@ -26,6 +27,7 @@ export const routes: Routes = [
             { path: 'my-companies/new-company', component: CreateCompanyComponent },
             { path: 'contracts/list-contracts', component: ListContractsComponent },
             { path: 'contracts/create-contract', component: GenerateContractsIAComponent },
+            { path: 'signer/sign-contract', component: SignContractComponent },
             { path: '', redirectTo: 'user', pathMatch: 'full' },
         ]
     },

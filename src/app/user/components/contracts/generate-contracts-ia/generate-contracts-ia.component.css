@@ -1,12 +1,60 @@
-.container-form{
+.container-form {
     border: 1px solid var(--gray-ligth-four-color);
     border-radius: 8px;
 }
 
-.validators{
+.validators {
     color: var(--cancel-color);
 }
 
 ::ng-deep .mat-step-header .mat-step-icon {
     background-color: var(--primary-color) !important;
+}
+
+
+/*--------------Estilos para el editor de texto---------------*/
+.NgxEditor__Wrapper {
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.editor-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.text-editor {
+    overflow-y: auto;
+}
+
+
+/*----------------Para los estilos del scroll-----------*/
+.text-editor::-webkit-scrollbar {
+    width: 8px;
+    height: 14px;
+}
+
+.text-editor::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 10px;
+}
+
+.text-editor::-webkit-scrollbar-thumb:hover,
+.text-editor::-webkit-scrollbar-thumb:active {
+    background-color: #aaa;
+}
+
+.text-editor::-webkit-scrollbar-track {
+    background-color: var(--white-color);
+    border-radius: 10px;
+}
+
+.icon-hero-info>svg{
+    width: 20px;
+    color: var(--info-color) !important;
+    cursor: pointer;
 }
