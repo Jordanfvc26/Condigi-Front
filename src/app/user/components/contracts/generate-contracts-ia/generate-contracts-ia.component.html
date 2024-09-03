@@ -131,64 +131,115 @@
                                 </div>
                             </div>
             
-                             <!--Empresa que EMISORA el contrato-->
-                             <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
-                                <div class="mb-3">
-                                    <label class="mb-1"><b>Empresa emisora</b></label>
-                                    <select class="form-select form-select-sm fs-6" [(ngModel)]="optionCompanySenderSelected"
-                                        formControlName="senderCompanyId" [ngClass]="{
-                                                    'is-invalid': contractForm.get('senderCompanyId')?.hasError('required') && contractForm.get('senderCompanyId')?.touched,
-                                                    'is-valid': optionCompanySenderSelected!= ''
-                                        }">
-                                        <option value="" selected disabled>Seleccione una opción</option>
-                                        @for(company of arrayMyCompanies; track $index){
-                                            <option [value]="company.companyId">{{company.companyName}}</option>
+                            @if(typeRelationContract == "company-to-company" || typeRelationContract == "company-to-person"){
+                                <!--Empresa que EMISORA el contrato-->
+                                <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+                                    <div class="mb-3">
+                                        <label class="mb-1"><b>Empresa emisora</b></label>
+                                        <select class="form-select form-select-sm fs-6" [(ngModel)]="optionCompanySenderSelected"
+                                            formControlName="senderCompanyId" [ngClass]="{
+                                                        'is-invalid': contractForm.get('senderCompanyId')?.hasError('required') && contractForm.get('senderCompanyId')?.touched,
+                                                        'is-valid': optionCompanySenderSelected!= ''
+                                            }">
+                                            <option value="" selected disabled>Seleccione una opción</option>
+                                            @for(company of arrayMyCompanies; track $index){
+                                                <option [value]="company.companyId">{{company.companyName}}</option>
+                                            }
+                                            <option value="otra">Otra (Registrar empresa)</option>
+                
+                                        </select>
+                                        @if (contractForm.get('senderCompanyId')?.hasError('required') && contractForm.get('senderCompanyId')?.touched) {
+                                            <div class="validators">
+                                                <small>¡Este campo es requerido!</small>
+                                            </div>
                                         }
-                                        <option value="otra">Otra (Registrar empresa)</option>
-            
-                                    </select>
-                                    @if (contractForm.get('senderCompanyId')?.hasError('required') && contractForm.get('senderCompanyId')?.touched) {
-                                        <div class="validators">
-                                            <small>¡Este campo es requerido!</small>
-                                        </div>
-                                    }
-                                </div>
-                            </div>
-            
-                            <!--Empresa que RECEPTORA del contrato-->
-                            <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
-                                <div class="mb-3">
-                                    <div class="row d-flex justify-content-between">
-                                        <div class="col-auto">
-                                            <label class="mb-1"><b>Empresa receptora</b></label>
-                                        </div>
-                                        <div class="col-auto" matTooltip="Ver información" matTooltipPosition="above">
-                                            <div class="icon-hero-info" (click)="openModalRegisterNewCompany()">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
-                                                </svg>  
-                                            </div>                      
-                                        </div>
                                     </div>
-                                    <select class="form-select form-select-sm fs-6" [(ngModel)]="optionCompanyReceiverSelected"
-                                        formControlName="receiverCompanyId" [ngClass]="{
-                                                    'is-invalid': contractForm.get('receiverCompanyId')?.hasError('required') && contractForm.get('receiverCompanyId')?.touched,
-                                                    'is-valid': optionCompanyReceiverSelected!= ''
-                                        }" (change)="getOptionCompanyReceiver($event)">
-                                        <option value="" selected disabled>Seleccione una opción</option>
-                                        @for(company of arrayMyCompanies; track $index){
-                                            <option [value]="company.companyId">{{company.companyName}}</option>
-                                        }
-                                        <option value="otra" (click)="openModalRegisterNewCompany()">{{infoNewCompanyReceiver.name ? infoNewCompanyReceiver.name : 'Otra (Registrar empresa)'}}</option>
-            
-                                    </select>
-                                    @if (contractForm.get('receiverCompanyId')?.hasError('required') && contractForm.get('receiverCompanyId')?.touched) {
-                                        <div class="validators">
-                                            <small>¡Este campo es requerido!</small>
-                                        </div>
-                                    }
                                 </div>
-                            </div>
+                            }
+                            @else {
+                                <!--Persona EMISORA del contrato-->
+                                <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+                                    <div class="mb-3">
+                                        <label class="mb-1"><b>Persona emisora</b></label>
+                                        <input type="text" class="form-control form-control-sm bg-light fs-6 is-valid"
+                                        [value]="fullNameUser" readonly>
+                                    </div>
+                                </div>
+                            }
+                             
+                            
+                            @if(typeRelationContract == "company-to-company"){
+                                <!--Empresa RECEPTORA del contrato-->
+                                <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+                                    <div class="mb-3">
+                                        <div class="row d-flex justify-content-between">
+                                            <div class="col-auto">
+                                                <label class="mb-1"><b>Empresa receptora</b></label>
+                                            </div>
+                                            <div class="col-auto" matTooltip="Ver información" matTooltipPosition="above">
+                                                <div class="icon-hero-info" (click)="openModalRegisterNewCompany()">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+                                                    </svg>  
+                                                </div>                      
+                                            </div>
+                                        </div>
+                                        <select class="form-select form-select-sm fs-6" [(ngModel)]="optionCompanyReceiverSelected"
+                                            formControlName="receiverCompanyId" [ngClass]="{
+                                                        'is-invalid': contractForm.get('receiverCompanyId')?.hasError('required') && contractForm.get('receiverCompanyId')?.touched,
+                                                        'is-valid': optionCompanyReceiverSelected!= ''
+                                            }" (change)="getOptionCompanyReceiver($event)">
+                                            <option value="" selected disabled>Seleccione una opción</option>
+                                            @for(company of arrayCompaniesForGenerateContract; track $index){
+                                                <option [value]="company.id">{{company.name}}</option>
+                                            }
+                                            <option value="other-company" (click)="openModalRegisterNewCompany()">{{infoNewCompanyReceiver.name ? infoNewCompanyReceiver.name : 'Otra (Registrar empresa)'}}</option>
+                
+                                        </select>
+                                        @if (contractForm.get('receiverCompanyId')?.hasError('required') && contractForm.get('receiverCompanyId')?.touched) {
+                                            <div class="validators">
+                                                <small>¡Este campo es requerido!</small>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                            @else {
+                                <!--Persona RECEPTORA del contrato-->
+                                <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+                                    <div class="mb-3">
+                                        <div class="row d-flex justify-content-between">
+                                            <div class="col-auto">
+                                                <label class="mb-1"><b>Persona receptora</b></label>
+                                            </div>
+                                            <div class="col-auto" matTooltip="Ver información" matTooltipPosition="above">
+                                                <div class="icon-hero-info" (click)="openModalRegisterNewPerson()">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+                                                    </svg>  
+                                                </div>                      
+                                            </div>
+                                        </div>
+                                        <select class="form-select form-select-sm fs-6" [(ngModel)]="optionCompanyReceiverSelected"
+                                            formControlName="receiverPersonId" [ngClass]="{
+                                                        'is-invalid': contractForm.get('receiverPersonId')?.hasError('required') && contractForm.get('receiverPersonId')?.touched,
+                                                        'is-valid': optionCompanyReceiverSelected!= ''
+                                            }" (change)="getOptionCompanyReceiver($event)">
+                                            <option value="" selected disabled>Seleccione una opción</option>
+                                            @for(person of arrayPersons; track $index){
+                                                <option [value]="person.id">{{person.firstName + " " + person.lastName}}</option>
+                                            }
+                                            <option value="other-person" (click)="openModalRegisterNewPerson()">{{infoNewPersonReceiver.firstName ? infoNewPersonReceiver.firstName + " " + infoNewPersonReceiver.lastName : 'Otra (Registrar persona)'}}</option>
+                
+                                        </select>
+                                        @if (contractForm.get('receiverPersonId')?.hasError('required') && contractForm.get('receiverPersonId')?.touched) {
+                                            <div class="validators">
+                                                <small>¡Este campo es requerido!</small>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
                         </div>
             
                         <!--Detalles de como se requiere el contrato-->
@@ -265,12 +316,14 @@
                 <!--Paso 2 (Contrato generado)-->
                 <mat-step>
                     <ng-template matStepLabel>Contrato</ng-template>
-                    <div class="container-editor">
-                        <div class="NgxEditor__Wrapper" style="height: 50vh;">
-                            <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
-                            <ngx-editor [editor]="editor" [ngModel]="infoContractInHTML" [disabled]="false" [placeholder]="'Type here...'" class="text-editor"></ngx-editor>
+                    <form [formGroup]="contractForm">
+                        <div class="container-editor">
+                            <div class="NgxEditor__Wrapper" style="height: 50vh;">
+                                <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
+                                <ngx-editor [editor]="editor" formControlName="textContract" [disabled]="false" [placeholder]="'Type here...'" class="text-editor"></ngx-editor>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                     
                     <!--Botones-->
                     <div class="row d-flex justify-content-end mt-2">

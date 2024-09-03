@@ -1,0 +1,148 @@
+@if(loaderStatus){
+    <app-loader></app-loader>
+}
+
+<body>
+    <!--Título del modal-->
+    <div class="row title-modal d-flex justify-content-between">
+        <div class="col-10 col-md-11 col-lg-11 col-xl-11 title d-flex">
+            <fa-icon [icon]="iconPerson" class="fs-4"></fa-icon>
+            <h5 class="mt-1">&nbsp;&nbsp;<b>Persona receptora del contrato</b></h5>
+        </div>
+        <div class="col-2 col-md-1 col-lg-1 col-xl-1 close-modal">
+            <fa-icon [icon]="iconClose" class="fs-4 icon-close" (click)="closeModal()"></fa-icon>
+        </div>
+    </div>
+
+
+    <!--Body del modal-->
+    <div class="row mb-3">
+        <form [formGroup]="personForm" class="mt-2">
+
+            <!--Nombres y Apellidos-->
+            <div class="row">
+                <!--Nombres-->
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="mb-3">
+                        <label class="mb-1"><b>Nombres</b></label>
+                        <input type="text" class="form-control form-control-sm bg-light fs-6" formControlName="firstName"
+                            placeholder="Juanito Pancracio" [maxlength]="100" [ngClass]="{
+                            'is-invalid': personForm.get('firstName')?.hasError('required') && personForm.get('firstName')?.touched || personForm.get('firstName')?.hasError('pattern')==true,
+                            'is-valid': !personForm.get('firstName')?.hasError('required') && !personForm.get('firstName')?.hasError('pattern') && personForm.get('firstName')?.value?.length >= 1
+                            }">
+                        @if (personForm.get('firstName')?.hasError('required') && personForm.get('firstName')?.touched) {
+                            <div class="validators">
+                                <small>¡Este campo es requerido!</small>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <!--Apellidos-->
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="mb-3">
+                        <label class="mb-1"><b>Apellidos</b></label>
+                        <input type="text" class="form-control form-control-sm bg-light fs-6" formControlName="lastName"
+                            placeholder="Alimaña Tupaleno" [maxlength]="100" [ngClass]="{
+                            'is-invalid': personForm.get('lastName')?.hasError('required') && personForm.get('lastName')?.touched || personForm.get('lastName')?.hasError('pattern')==true,
+                            'is-valid': !personForm.get('lastName')?.hasError('required') && !personForm.get('lastName')?.hasError('pattern') && personForm.get('lastName')?.value?.length >= 1
+                            }">
+                        @if (personForm.get('lastName')?.hasError('required') && personForm.get('lastName')?.touched) {
+                            <div class="validators">
+                                <small>¡Este campo es requerido!</small>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!--Correo, teléfono y cédula-->
+            <div class="row">
+                <!--Cédula-->
+                <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3">
+                    <div class="mb-3">
+                        <label class="mb-1"><b>Cédula</b></label>
+                        <input type="text" class="form-control form-control-sm bg-light fs-6" formControlName="identification"
+                            placeholder="1234567890" [maxlength]="10" [ngClass]="{
+                            'is-invalid': personForm.get('identification')?.hasError('required') && personForm.get('identification')?.touched || personForm.get('identification')?.hasError('pattern')==true,
+                            'is-valid': !personForm.get('identification')?.hasError('required') && !personForm.get('identification')?.hasError('pattern') && personForm.get('identification')?.value?.length >= 1
+                            }">
+                        @if (personForm.get('identification')?.hasError('required') && personForm.get('identification')?.touched) {
+                            <div class="validators">
+                                <small>¡Este campo es requerido!</small>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <!--Teléfono-->
+                <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3">
+                    <div class="mb-3">
+                        <label class="mb-1"><b>Teléfono</b></label>
+                        <input type="text" class="form-control form-control-sm bg-light fs-6" formControlName="phone"
+                            placeholder="09876543210" [maxlength]="10" [ngClass]="{
+                            'is-invalid': personForm.get('phone')?.hasError('required') && personForm.get('phone')?.touched || personForm.get('phone')?.hasError('pattern')==true,
+                            'is-valid': !personForm.get('phone')?.hasError('required') && !personForm.get('phone')?.hasError('pattern') && personForm.get('phone')?.value?.length >= 1
+                            }">
+                        @if (personForm.get('phone')?.hasError('required') && personForm.get('phone')?.touched) {
+                            <div class="validators">
+                                <small>¡Este campo es requerido!</small>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <!--Correo-->
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="mb-3">
+                        <label class="mb-1"><b>Correo</b></label>
+                        <input type="email" class="form-control form-control-sm bg-light fs-6" formControlName="email"
+                            placeholder="juanito@gmail.com" [maxlength]="80" [ngClass]="{
+                            'is-invalid': personForm.get('email')?.hasError('required') && personForm.get('email')?.touched || personForm.get('email')?.hasError('pattern')==true,
+                            'is-valid': !personForm.get('email')?.hasError('required') && !personForm.get('email')?.hasError('pattern') && personForm.get('email')?.value?.length >= 1
+                            }">
+                        @if (personForm.get('email')?.hasError('required') && personForm.get('email')?.touched) {
+                            <div class="validators">
+                                <small>¡Este campo es requerido!</small>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!--Dirección-->
+            <div class="row">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label class="mb-1"><b>Dirección</b></label>
+                        <textarea type="text" rows="3" class="form-control form-control-sm bg-light fs-6"
+                            formControlName="address" placeholder="Av. Jaime Roldós y 25ava" [maxlength]="50"
+                            [ngClass]="{
+                                'is-invalid': personForm.get('address')?.hasError('required') && personForm.get('address')?.touched || personForm.get('address')?.hasError('pattern')==true,
+                                'is-valid': personForm.get('address')?.hasError('required')==false && personForm.get('address')?.hasError('pattern') == false && personForm.get('address')?.value?.length >= 4
+                            }">
+                        </textarea>
+                        @if (personForm.get('address')?.hasError('required') &&
+                        personForm.get('address')?.touched) {
+                        <div class="validators">
+                            <small>¡Este campo es requerido!</small>
+                        </div>
+                        }
+                        @if (personForm.get('address')?.hasError('pattern')) {
+                        <div class="validators">
+                            <small>¡Solo se permiten letras!</small>
+                        </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!--Footer del modal-->
+    <div class="row button footer-modal d-flex justify-content-end">
+        <div class="col-auto">
+            <button class="btn btn-primary" [disabled]="!personForm.valid" (click)="addPerson()">ACEPTAR</button>
+        </div>
+    </div>
+</body>

@@ -10,6 +10,7 @@ import { environment } from '../../../../environments/environment';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { SearchRegistersPipe } from '../pipes/search-registers.pipe';
+import { SelectTypeContractComponent } from '../../../user/components/contracts/modals/select-type-contract/select-type-contract.component';
 
 @Component({
   selector: 'app-table',
@@ -116,8 +117,20 @@ export class TableComponent {
   }
 
   //Método que redirecciona al componente de crear un nuevo registro
-  goToCreateNewRegister(){
-    this.router.navigateByUrl(this.urlGoToCreateNewRegister);
+  goToCreateNewRegister() {
+    if(this.urlGoToCreateNewRegister != "")
+      this.router.navigateByUrl(this.urlGoToCreateNewRegister);
+    else{
+      this.openModalSelectContractRelation();
+    }
+  }
+
+  //Método que abre el modal para seleccionar el tipo de relación del contrato
+  openModalSelectContractRelation() {
+    this.dialog.open(SelectTypeContractComponent, {
+      width: '500px',
+      enterAnimationDuration: '250ms',
+    });
   }
 
 

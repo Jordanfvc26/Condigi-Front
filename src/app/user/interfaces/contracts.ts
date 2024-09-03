@@ -1,5 +1,6 @@
 import { PaginationI } from "../../shared/interfaces/pagination"
 import { ReceiverCompanyI } from "./companies";
+import { ReceiverPersonI } from "./persons";
 
 //Interfaz de respuesta de la API para obtener los tipos de contratos
 export interface ApiResponseGetContractTypesI {
@@ -32,22 +33,12 @@ export interface BodyForGenerateContractWithIAI {
     contractDetails: string;
     contractObjects: string;
     contractConfidentiality: string;
-    senderId: string;
+    senderId?: string;
     senderType: number;
     receiverType: number; //0 para empresa y 1 para persona
     receiverId?: string;
     receiverCompany?: ReceiverCompanyI;
     receiverPerson?: ReceiverPersonI;
-}
-
-//Interfaz con el body requerido cuando es una persona sin registrar a la que se envía el contrato
-export interface ReceiverPersonI {
-    firstName: string;
-    lastName: string;
-    email: string;
-    phone: string;
-    identification: string;
-    address: string;
 }
 
 //Interfaz de respuesta de la API para cuando se genera un contrato con IA

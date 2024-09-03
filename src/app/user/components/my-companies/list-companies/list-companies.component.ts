@@ -72,7 +72,7 @@ export class ListCompaniesComponent {
   //Método que llama al servicio para obtener el listado de compañías del usuario logueado
   getCompaniesByUser(currentPage: number, pageSize: number){
     this.loaderStatus = true;
-    this.companiesService.getCompaniesByUser(currentPage, pageSize).subscribe({
+    this.companiesService.getCompaniesByUser().subscribe({
       next: (response: ApiResponseGetCompaniesByUserI) => {
         this.loaderStatus = false;
         if(response.statusCode == 200)

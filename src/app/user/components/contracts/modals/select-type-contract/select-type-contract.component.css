@@ -1,0 +1,59 @@
+body {
+    padding: 20px !important;
+    background-color: var(--white-color);
+}
+
+.title>fa-icon,
+.title>h5 {
+    color: var(--primary-color);
+}
+
+.icon-close {
+    cursor: pointer;
+    color: var(--gray-ligth-one-color)
+}
+
+.icon-close:hover {
+    color: var(--gray-dark-color)
+}
+
+button {
+    padding: 5px 8px !important;
+}
+
+.icon-hero-title{
+    width: 24px;
+    color: var(--fonts-primary-color);
+}
+
+/*Para las opciones de los tipos de preguntas*/
+.option-relation{
+    border: 1px solid var(--gray-ligth-two-color);
+    border-radius: 10px;
+    padding: 10px 0;
+    cursor: pointer;
+}
+
+.icon-hero-type-question>svg{
+    width: 40px;
+    color: var(--primary-color);
+}
+
+.option-relation>p{
+    color: var(--gray-dark-color);
+}
+
+.option-relation:hover{
+    border: 1px solid var(--primary-color);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+}
+
+/*------------------------------Responsive web design------------------------------*/
+/*-----------------------------------Smarthphone-----------------------------------*/
+@media only screen and (max-width: 768px) {
+    body {
+        padding: 5% !important;
+        background-color: var(--white-color);
+    }
+}
