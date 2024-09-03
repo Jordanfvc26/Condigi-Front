@@ -63,6 +63,11 @@
                                             [icon]="iconViewDetails" id="iconViewDetails">
                                         </fa-icon>
                                     }
+                                    @if(option.icon === 'iconAddSignatories'){
+                                        <fa-icon [matTooltip]="option.action" matTooltipPosition="below"
+                                            [icon]="iconAddSignatories" id="iconAddSignatories" (click)="openModalAddSignatories(content)">
+                                        </fa-icon>
+                                    }
                                     @if(option.icon == 'iconEdit'){
                                         <fa-icon [matTooltip]="option.action" matTooltipPosition="below"
                                             [icon]="iconEdit" id="iconEdit">

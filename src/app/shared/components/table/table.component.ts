@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { SearchRegistersPipe } from '../pipes/search-registers.pipe';
 import { SelectTypeContractComponent } from '../../../user/components/contracts/modals/select-type-contract/select-type-contract.component';
+import { AddSignatoriesComponent } from '../../../user/components/contracts/modals/add-signatories/add-signatories.component';
 
 @Component({
   selector: 'app-table',
@@ -133,9 +134,21 @@ export class TableComponent {
     });
   }
 
+  //Método que abre el modal para agregar firmantes al contrato
+  openModalAddSignatories(contract: any) {
+    console.log("Contrato seleccionado");
+    console.log(contract);
+    AddSignatoriesComponent.contractID = contract.contractId;
+    this.dialog.open(AddSignatoriesComponent, {
+      width: '400px',
+      enterAnimationDuration: '250ms',
+    });
+  }
+
 
   //Icons to use
   //Iconos de acciones dentro de la tabla
+  iconAddSignatories = iconos.faUserPlus;
   iconViewDetails = iconos.faEye;
   iconEdit = iconos.faEdit;
   iconDelete = iconos.faTrashAlt;

@@ -3,7 +3,7 @@ import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { HeadersService } from '../../shared/services/headers.service';
 import { Observable } from 'rxjs';
-import { ApiResponseGenerateContractWithIAI, ApiResponseGetContractTypesI, ApiResponseGetInfoContractI, ApiResponseUpdateContractI, BodyForGenerateContractWithIAI, BodyForUpdateInfoContractI } from '../interfaces/contracts';
+import { ApiResponseAddSignatoryI, ApiResponseGenerateContractWithIAI, ApiResponseGetContractTypesI, ApiResponseGetInfoContractI, ApiResponseGetMyContractsI, ApiResponseUpdateContractI, BodyForAddSignatoryI, BodyForGenerateContractWithIAI, BodyForUpdateInfoContractI } from '../interfaces/contracts';
 
 @Injectable({
   providedIn: 'root'
@@ -49,5 +49,17 @@ export class ContractsService {
   updateContractByID(contractId: string, body: BodyForUpdateInfoContractI): Observable<ApiResponseUpdateContractI> {
     this.options = this.headersService.getHeaders(this.getHeaders());
     return this.http.put<ApiResponseUpdateContractI>(this.urlApi + `/contracts/${contractId}`, body, this.options);
+  }
+
+  //Método que consume la API para obtener el listado de contratos del usuario autenticado
+  getMyContracts(status: number, pageSize: number, currentPage: number, ): Observable<ApiResponseGetMyContractsI> {
+    this.options = this.headersService.getHeaders(this.getHeaders());
+    return this.http.get<ApiResponseGetMyContractsI>(this.urlApi + `/contracts/list?status=${status}&pageSize=${pageSize}&currentPage=${currentPage}`, this.options);
+  }
+
+  //Método que consume la API para agregar un firmante al contrato
+  addSignatoryToContract(body: BodyForAddSignatoryI): Observable<ApiResponseAddSignatoryI> {
+    this.options = this.headersService.getHeaders(this.getHeaders());
+    return this.http.post<ApiResponseAddSignatoryI>(this.urlApi + `/contract-participants/add-user`, body, this.options);
   }
 }

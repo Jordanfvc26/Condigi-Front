@@ -28,6 +28,7 @@ export const routes: Routes = [
             { path: 'contracts/list-contracts', component: ListContractsComponent },
             { path: 'contracts/create-contract', component: GenerateContractsIAComponent },
             { path: 'signer/sign-contract', component: SignContractComponent },
+            { path: 'users/add-signers', component: SignContractComponent },
             { path: '', redirectTo: 'user', pathMatch: 'full' },
         ]
     },

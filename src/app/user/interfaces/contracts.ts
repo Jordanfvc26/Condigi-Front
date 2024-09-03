@@ -105,3 +105,46 @@ export interface ApiResponseUpdateContractI {
     statusCode: number;
     error?: string;
 }
+
+
+//Interfaz de respuesta de la API para obtener los contratos de un usuario
+export interface ApiResponseGetMyContractsI {
+    pagination: PaginationI;
+    data: ContractI[];
+    message: string;
+    statusCode: number;
+    error?: string;
+}
+
+//Interfaz con la información de un contrato
+export interface ContractI {
+    contractId: string;
+    content: string;
+    contractType: ContractTypeI;
+    startDate: string;
+    endDate: string;
+    numClauses: number;
+    paymentAmount: number;
+    paymentFrequency: number;
+    status: number;
+    createdAt: string;
+    createdBy: string;
+    updatedAt: string;
+    updatedBy: string;
+    contractParticipants: ContractParticipantI;
+}
+
+
+//Interfaz con el body requerido para agregar un firmante (persona o empresa) al contrato
+export interface BodyForAddSignatoryI {
+    contractId: string;
+    userId: string;
+}
+
+//Interfaz de respuesta de la API para cuando se agrega un firmante al documento
+export interface ApiResponseAddSignatoryI {
+    data: boolean;
+    message: string;
+    statusCode: number;
+    error?: string;
+}
