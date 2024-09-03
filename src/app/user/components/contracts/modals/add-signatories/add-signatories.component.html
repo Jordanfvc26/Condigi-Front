@@ -1,0 +1,53 @@
+@if(loaderStatus){
+    <app-loader></app-loader>
+}
+
+<body>
+    <!--Título del modal-->
+    <div class="row title-modal d-flex justify-content-between">
+        <div class="col-10 col-md-11 col-lg-11 col-xl-11 title d-flex">
+            <div class="title">
+                <h5 class="mt-1"><b><fa-icon [icon]="iconUser"></fa-icon> &nbsp;&nbsp;Agregar firmantes</b></h5>
+            </div>
+        </div>
+        <div class="col-2 col-md-1 col-lg-1 col-xl-1 close-modal">
+            <fa-icon [icon]="iconClose" class="fs-4 icon-close" (click)="closeModal()"></fa-icon>
+        </div>
+    </div>
+
+    <!--Body del modal-->
+    <div class="row d-flex justify-content-evenly mt-3">
+        <div class="row">
+            <label class="mb-4">Selecciona el usuario al que deseas agregar a contrato.</label>
+
+            <!--Persona RECEPTORA del contrato-->
+            <form [formGroup]="personForm" class="col-12">
+                <div class="mb-3">
+                    <label class="mb-1"><b>Nuevo firmante</b></label>
+                    <select class="form-select form-select-sm fs-6" [(ngModel)]="optionSigantorSelected"
+                        formControlName="personID" [ngClass]="{
+                            'is-invalid': personForm.get('personID')?.hasError('required') && personForm.get('personID')?.touched,
+                            'is-valid': optionSigantorSelected!= ''
+                        }">
+                        <option value="" selected disabled>Seleccione una opción</option>
+                        @for(person of arrayPersons; track $index){
+                            <option [value]="person.id">{{person.firstName + " " + person.lastName}}</option>
+                        }
+                    </select>
+                    @if (personForm.get('personID')?.hasError('required') && personForm.get('personID')?.touched) {
+                        <div class="validators">
+                            <small>¡Este campo es requerido!</small>
+                        </div>
+                    }
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!--Footer del modal-->
+    <div class="row button footer-modal d-flex justify-content-end">
+        <div class="col-auto">
+            <button class="btn btn-primary" (click)="addSignatory()">AGREGAR</button>
+        </div>
+    </div>
+</body>

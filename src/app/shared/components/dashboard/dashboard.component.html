@@ -25,7 +25,7 @@
                 </div>
             </div>
             <!--Opción de Gestión de contratos-->
-            <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 mb-4">
+            <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 mb-4" [routerLink]="['/user/contracts/list-contracts']">
                 <div class="card h-100 text-center">
                     <div class="card-body">
                         <div class="hero-icon">
@@ -39,7 +39,7 @@
                 </div>
             </div>
             <!--Opción para generar contratos-->
-            <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 mb-4">
+            <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 mb-4" (click)="openModalSelectTypeRelation()">
                 <div class="card h-100 text-center">
                     <div class="card-body">
                         <div class="hero-icon">
@@ -53,7 +53,7 @@
                 </div>
             </div>
             <!--Opción para firmar contratos-->
-            <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 mb-4">
+            <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 mb-4" [routerLink]="['/user/signer/sign-contract']">
                 <div class="card h-100 text-center">
                     <div class="card-body">
                         <div class="hero-icon">
@@ -63,6 +63,34 @@
                         </div>
                         <h5 class="card-title mt-2">Firmador de contratos</h5>
                         <p class="card-text">Firma tus contratos en PDF como si fuera tu manuscrito</p>
+                    </div>
+                </div>
+            </div>
+            <!--Opción para agregar usuarios al contrato-->
+            <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 mb-4" [routerLink]="['/user/users/add-signers']">
+                <div class="card h-100 text-center">
+                    <div class="card-body">
+                        <div class="hero-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
+                            </svg>
+                        </div>
+                        <h5 class="card-title mt-2">Agregar firmantes</h5>
+                        <p class="card-text">Agrega personas o empresas a los contratos que ya has generado</p>
+                    </div>
+                </div>
+            </div>
+            <!--Acerca de-->
+            <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 mb-4" [routerLink]="['/user/information/about']">
+                <div class="card h-100 text-center">
+                    <div class="card-body">
+                        <div class="hero-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+                            </svg>
+                        </div>
+                        <h5 class="card-title mt-2">Acerca De</h5>
+                        <p class="card-text">Obtén información detallada sobre el software ConDigi</p>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,33 @@
+@if(loaderStatus){
+    <app-loader></app-loader>
+}
+
+<body>
+    <!--NavBar-->
+    <app-navbar></app-navbar>
+
+    <!--Título del módulo-->
+    <div class="container title-module mt-5">
+        <app-header-back [titleModule]="'Mis contratos'" [urlBack]="'/user/dashboard'"></app-header-back>
+    </div>
+
+    <!--Tabla con el listado de compañías-->
+    <div class="container mt-5">
+        <div class="row">
+            <app-table 
+            [columns]="columns" 
+            [columnsFilter]="columnsFilter" 
+            [data]="dataContracts" 
+            [actions]="actions" 
+            [filterBy]="filterCompanies"
+            [searchBy]="'companyName'"
+            [searchByDescription]="'nombre'" 
+            [excelName]="'Companias'"
+            [urlGoToCreateNewRegister]="''"
+            [urlGoToEdit]="'/user/my-companies/edit-company'"
+            (idItemToDelete)="getIDItemToDelete($event)"
+            (deleteItem)="deleteCompany($event)">
+        </app-table>
+        </div>
+    </div>
+</body>

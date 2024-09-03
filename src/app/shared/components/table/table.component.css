@@ -60,6 +60,13 @@ thead {
     color: var(--info-color) !important;
 }
 
+#iconAddSignatories {
+    font-size: 1rem !important;
+    margin-right: 12px;
+    cursor: pointer;
+    color: var(--success-color) !important;
+}
+
 #iconEdit {
     font-size: 1rem !important;
     margin-right: 12px;

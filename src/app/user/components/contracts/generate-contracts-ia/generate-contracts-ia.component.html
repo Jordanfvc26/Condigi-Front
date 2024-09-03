@@ -1,0 +1,345 @@
+@if(loaderStatus){
+    <app-loader></app-loader>
+}
+
+<body>
+    <!--NavBar-->
+    <app-navbar></app-navbar>
+
+    <!--Título del módulo-->
+    <div class="container title-module mt-5">
+        <app-header-back [titleModule]="'Generar contrato con IA'" [urlBack]="'/user/contracts/list-contracts'"></app-header-back>
+    </div>
+
+    <div class="container mt-5">
+
+        <div class="container-form">
+            <mat-stepper (linear)="true" #stepper>
+                <!--Paso 1 (Lineamientos para generar el contrato)-->
+                <mat-step>
+                    <ng-template matStepLabel>Detalles</ng-template>
+                    <form [formGroup]="contractForm" class="mt-2">
+            
+                        <div class="row">
+                            <!--Tipo de contrato-->
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                <div class="mb-3">
+                                    <label class="mb-1"><b>Tipo de contrato</b></label>
+                                    <select class="form-select form-select-sm fs-6" [(ngModel)]="optionTypeContractSelected"
+                                        formControlName="contractTypeId" [ngClass]="{
+                                                    'is-invalid': contractForm.get('contractTypeId')?.hasError('required') && contractForm.get('contractTypeId')?.touched,
+                                                    'is-valid': optionTypeContractSelected!= ''
+                                        }">
+                                        <option value="" selected disabled>Seleccione una opción</option>
+                                        @for(contract of arrayTypeContracts; track $index){
+                                            <option [value]="contract.contractTypeId">{{contract.name}}</option>
+                                        }
+            
+                                    </select>
+                                    @if (contractForm.get('contractTypeId')?.hasError('required') && contractForm.get('contractTypeId')?.touched) {
+                                        <div class="validators">
+                                            <small>¡Este campo es requerido!</small>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+            
+                            <!--Fecha de inicio-->
+                            <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3">
+                                <div class="mb-3">
+                                    <label class="mb-1"><b>Inicio del contrato</b></label>
+                                    <input type="date" class="form-select form-select-sm fs-6"
+                                        formControlName="startDate" [ngClass]="{
+                                                    'is-invalid': contractForm.get('startDate')?.hasError('required') && contractForm.get('startDate')?.touched,
+                                                    'is-valid': !contractForm.get('startDate')?.hasError('required')
+                                        }">
+                                    @if (contractForm.get('startDate')?.hasError('required') && contractForm.get('startDate')?.touched) {
+                                        <div class="validators">
+                                            <small>¡Este campo es requerido!</small>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+            
+                            <!--Fecha de fin-->
+                            <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3">
+                                <div class="mb-3">
+                                    <label class="mb-1"><b>Fin del contrato</b></label>
+                                    <input type="date" class="form-select form-select-sm fs-6"
+                                        formControlName="endDate" [ngClass]="{
+                                                    'is-invalid': contractForm.get('endDate')?.hasError('required') && contractForm.get('endDate')?.touched,
+                                                    'is-valid': !contractForm.get('endDate')?.hasError('required')
+                                        }"/>
+                                    @if (contractForm.get('endDate')?.hasError('required') && contractForm.get('endDate')?.touched) {
+                                        <div class="validators">
+                                            <small>¡Este campo es requerido!</small>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+            
+                            <!--Número de cláusulas-->
+                            <div class="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2">
+                                <div class="mb-3">
+                                    <label class="mb-1"><b>Cláusulas</b></label>
+                                    <input type="text" class="form-control form-control-sm bg-light fs-6"
+                                        formControlName="numClauses" placeholder="5" [maxlength]="2" [ngClass]="{
+                                            'is-invalid': contractForm.get('numClauses')?.hasError('required') && contractForm.get('numClauses')?.touched || contractForm.get('numClauses')?.hasError('pattern')==true,
+                                            'is-valid': !contractForm.get('numClauses')?.hasError('required') && !contractForm.get('numClauses')?.hasError('pattern') && contractForm.get('numClauses')?.value?.length >= 1
+                                            }">
+                                    @if (contractForm.get('numClauses')?.hasError('required') && contractForm.get('numClauses')?.touched) {
+                                        <div class="validators">
+                                            <small>¡Este campo es requerido!</small>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class="row">
+                            <!--Cantidad de pago-->
+                            <div class="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2">
+                                <div class="mb-3">
+                                    <label class="mb-1"><b>Monto a cancelar</b></label>
+                                    <input type="text" class="form-control form-control-sm bg-light fs-6"
+                                        formControlName="paymentAmount" placeholder="50000" [maxlength]="6" [ngClass]="{
+                                            'is-invalid': contractForm.get('paymentAmount')?.hasError('required') && contractForm.get('paymentAmount')?.touched || contractForm.get('paymentAmount')?.hasError('pattern')==true,
+                                            'is-valid': !contractForm.get('paymentAmount')?.hasError('required') && !contractForm.get('paymentAmount')?.hasError('pattern') && contractForm.get('paymentAmount')?.value?.length >= 2
+                                            }">
+                                    @if (contractForm.get('paymentAmount')?.hasError('required') && contractForm.get('paymentAmount')?.touched) {
+                                        <div class="validators">
+                                            <small>¡Este campo es requerido!</small>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+            
+                            <!--Número de pagos-->
+                            <div class="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2">
+                                <div class="mb-3">
+                                    <label class="mb-1"><b>Cuotas</b></label>
+                                    <input type="text" class="form-control form-control-sm bg-light fs-6"
+                                        formControlName="paymentFrequency" placeholder="12" [maxlength]="2" [ngClass]="{
+                                            'is-invalid': contractForm.get('paymentFrequency')?.hasError('required') && contractForm.get('paymentFrequency')?.touched || contractForm.get('paymentFrequency')?.hasError('pattern')==true,
+                                            'is-valid': contractForm.get('paymentFrequency')?.hasError('required')==false && contractForm.get('paymentFrequency')?.hasError('pattern') == false && contractForm.get('paymentFrequency')?.value?.length >= 4
+                                            }">
+                                    @if (contractForm.get('paymentFrequency')?.hasError('required') && contractForm.get('paymentFrequency')?.touched) {
+                                        <div class="validators">
+                                            <small>¡Este campo es requerido!</small>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+            
+                            @if(typeRelationContract == "company-to-company" || typeRelationContract == "company-to-person"){
+                                <!--Empresa que EMISORA el contrato-->
+                                <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+                                    <div class="mb-3">
+                                        <label class="mb-1"><b>Empresa emisora</b></label>
+                                        <select class="form-select form-select-sm fs-6" [(ngModel)]="optionCompanySenderSelected"
+                                            formControlName="senderCompanyId" [ngClass]="{
+                                                        'is-invalid': contractForm.get('senderCompanyId')?.hasError('required') && contractForm.get('senderCompanyId')?.touched,
+                                                        'is-valid': optionCompanySenderSelected!= ''
+                                            }">
+                                            <option value="" selected disabled>Seleccione una opción</option>
+                                            @for(company of arrayMyCompanies; track $index){
+                                                <option [value]="company.companyId">{{company.companyName}}</option>
+                                            }
+                                            <option value="otra">Otra (Registrar empresa)</option>
+                
+                                        </select>
+                                        @if (contractForm.get('senderCompanyId')?.hasError('required') && contractForm.get('senderCompanyId')?.touched) {
+                                            <div class="validators">
+                                                <small>¡Este campo es requerido!</small>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                            @else {
+                                <!--Persona EMISORA del contrato-->
+                                <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+                                    <div class="mb-3">
+                                        <label class="mb-1"><b>Persona emisora</b></label>
+                                        <input type="text" class="form-control form-control-sm bg-light fs-6 is-valid"
+                                        [value]="fullNameUser" readonly>
+                                    </div>
+                                </div>
+                            }
+                             
+                            
+                            @if(typeRelationContract == "company-to-company"){
+                                <!--Empresa RECEPTORA del contrato-->
+                                <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+                                    <div class="mb-3">
+                                        <div class="row d-flex justify-content-between">
+                                            <div class="col-auto">
+                                                <label class="mb-1"><b>Empresa receptora</b></label>
+                                            </div>
+                                            <div class="col-auto" matTooltip="Ver información" matTooltipPosition="above">
+                                                <div class="icon-hero-info" (click)="openModalRegisterNewCompany()">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+                                                    </svg>  
+                                                </div>                      
+                                            </div>
+                                        </div>
+                                        <select class="form-select form-select-sm fs-6" [(ngModel)]="optionCompanyReceiverSelected"
+                                            formControlName="receiverCompanyId" [ngClass]="{
+                                                        'is-invalid': contractForm.get('receiverCompanyId')?.hasError('required') && contractForm.get('receiverCompanyId')?.touched,
+                                                        'is-valid': optionCompanyReceiverSelected!= ''
+                                            }" (change)="getOptionCompanyReceiver($event)">
+                                            <option value="" selected disabled>Seleccione una opción</option>
+                                            @for(company of arrayCompaniesForGenerateContract; track $index){
+                                                <option [value]="company.id">{{company.name}}</option>
+                                            }
+                                            <option value="other-company" (click)="openModalRegisterNewCompany()">{{infoNewCompanyReceiver.name ? infoNewCompanyReceiver.name : 'Otra (Registrar empresa)'}}</option>
+                
+                                        </select>
+                                        @if (contractForm.get('receiverCompanyId')?.hasError('required') && contractForm.get('receiverCompanyId')?.touched) {
+                                            <div class="validators">
+                                                <small>¡Este campo es requerido!</small>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                            @else {
+                                <!--Persona RECEPTORA del contrato-->
+                                <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+                                    <div class="mb-3">
+                                        <div class="row d-flex justify-content-between">
+                                            <div class="col-auto">
+                                                <label class="mb-1"><b>Persona receptora</b></label>
+                                            </div>
+                                            <div class="col-auto" matTooltip="Ver información" matTooltipPosition="above">
+                                                <div class="icon-hero-info" (click)="openModalRegisterNewPerson()">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+                                                    </svg>  
+                                                </div>                      
+                                            </div>
+                                        </div>
+                                        <select class="form-select form-select-sm fs-6" [(ngModel)]="optionCompanyReceiverSelected"
+                                            formControlName="receiverPersonId" [ngClass]="{
+                                                        'is-invalid': contractForm.get('receiverPersonId')?.hasError('required') && contractForm.get('receiverPersonId')?.touched,
+                                                        'is-valid': optionCompanyReceiverSelected!= ''
+                                            }" (change)="getOptionCompanyReceiver($event)">
+                                            <option value="" selected disabled>Seleccione una opción</option>
+                                            @for(person of arrayPersons; track $index){
+                                                <option [value]="person.id">{{person.firstName + " " + person.lastName}}</option>
+                                            }
+                                            <option value="other-person" (click)="openModalRegisterNewPerson()">{{infoNewPersonReceiver.firstName ? infoNewPersonReceiver.firstName + " " + infoNewPersonReceiver.lastName : 'Otra (Registrar persona)'}}</option>
+                
+                                        </select>
+                                        @if (contractForm.get('receiverPersonId')?.hasError('required') && contractForm.get('receiverPersonId')?.touched) {
+                                            <div class="validators">
+                                                <small>¡Este campo es requerido!</small>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+            
+                        <!--Detalles de como se requiere el contrato-->
+                        <div class="row mt-2">
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    <label class="mb-1"><b>Detalles del contrato</b></label>
+                                    <textarea type="text" rows="5" class="form-control form-control-sm bg-light fs-6"
+                                        formControlName="contractDetails" placeholder="El contrato debe centrarse en...." [maxlength]="500" [ngClass]="{
+                                            'is-invalid': contractForm.get('contractDetails')?.hasError('required') && contractForm.get('contractDetails')?.touched || contractForm.get('contractDetails')?.hasError('pattern')==true,
+                                            'is-valid': contractForm.get('contractDetails')?.hasError('required')==false && contractForm.get('contractDetails')?.hasError('pattern') == false && contractForm.get('contractDetails')?.value?.length >= 4
+                                            }">
+                                    </textarea>
+                                    @if (contractForm.get('contractDetails')?.hasError('required') && contractForm.get('contractDetails')?.touched) {
+                                        <div class="validators">
+                                            <small>¡Este campo es requerido!</small>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+            
+                        <!--Objetos del contrato-->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    <label class="mb-1"><b>Objetos del contrato</b></label>
+                                    <textarea type="text" rows="5" class="form-control form-control-sm bg-light fs-6"
+                                        formControlName="contractObjects" placeholder="El contrato debe contener..." [maxlength]="500" [ngClass]="{
+                                            'is-invalid': contractForm.get('contractObjects')?.hasError('required') && contractForm.get('contractObjects')?.touched || contractForm.get('contractObjects')?.hasError('pattern')==true,
+                                            'is-valid': contractForm.get('contractObjects')?.hasError('required')==false && contractForm.get('contractObjects')?.hasError('pattern') == false && contractForm.get('contractObjects')?.value?.length >= 4
+                                            }">
+                                    </textarea>
+                                    @if (contractForm.get('contractObjects')?.hasError('required') && contractForm.get('contractObjects')?.touched) {
+                                        <div class="validators">
+                                            <small>¡Este campo es requerido!</small>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+            
+                         <!--Confidencialidad del contrato-->
+                         <div class="row">
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    <label class="mb-1"><b>Confidencialidad del contrato</b></label>
+                                    <textarea type="text" rows="5" class="form-control form-control-sm bg-light fs-6"
+                                        formControlName="contractConfidentiality" placeholder="Las partes involucradas están sujetas a..." [maxlength]="500" [ngClass]="{
+                                            'is-invalid': contractForm.get('contractConfidentiality')?.hasError('required') && contractForm.get('contractConfidentiality')?.touched || contractForm.get('contractConfidentiality')?.hasError('pattern')==true,
+                                            'is-valid': contractForm.get('contractConfidentiality')?.hasError('required')==false && contractForm.get('contractConfidentiality')?.hasError('pattern') == false && contractForm.get('contractConfidentiality')?.value?.length >= 4
+                                            }">
+                                    </textarea>
+                                    @if (contractForm.get('contractConfidentiality')?.hasError('required') && contractForm.get('contractConfidentiality')?.touched) {
+                                        <div class="validators">
+                                            <small>¡Este campo es requerido!</small>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+            
+                        <!--Botones-->
+                        <div class="row d-flex justify-content-end">
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-primary btn-sm w-100" (click)="generateContract()"
+                                        [disabled]="!contractForm.valid">SIGUIENTE
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </mat-step>
+    
+                <!--Paso 2 (Contrato generado)-->
+                <mat-step>
+                    <ng-template matStepLabel>Contrato</ng-template>
+                    <form [formGroup]="contractForm">
+                        <div class="container-editor">
+                            <div class="NgxEditor__Wrapper" style="height: 50vh;">
+                                <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
+                                <ngx-editor [editor]="editor" formControlName="textContract" [disabled]="false" [placeholder]="'Type here...'" class="text-editor"></ngx-editor>
+                            </div>
+                        </div>
+                    </form>
+                    
+                    <!--Botones-->
+                    <div class="row d-flex justify-content-end mt-2">
+                        <div class="col-auto">
+                            <button type="button" class="btn btn-back btn-sm w-100" matStepperPrevious>
+                                <fa-icon [icon]="iconBack"></fa-icon> ATRÁS
+                            </button>
+                        </div>
+                        <div class="col-auto">
+                            <button type="button" class="btn btn-primary btn-sm w-100" (click)="saveContract()"
+                                [disabled]="!contractForm.valid">GUARDAR
+                            </button>
+                        </div>
+                    </div>
+                </mat-step>
+            </mat-stepper>
+        </div>
+    </div>
+</body>

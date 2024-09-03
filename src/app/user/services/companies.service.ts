@@ -3,7 +3,7 @@ import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { HeadersService } from '../../shared/services/headers.service';
 import { Observable } from 'rxjs';
-import { ApiResponseCreateCompanyI, ApiResponseGetCompaniesByUserI, BodyCreateCompanyI } from '../interfaces/companies';
+import { ApiResponseCreateCompanyI, ApiResponseGetCompaniesByUserI, ApiResponseGetCompaniesForGenerateContractI, BodyCreateCompanyI } from '../interfaces/companies';
 
 @Injectable({
   providedIn: 'root'
@@ -27,10 +27,16 @@ export class CompaniesService {
     return headers;
   }
 
-  //Método que consume la API para obtener el listado de compañías del usuario logueado
-  getCompaniesByUser(currentPage: number, pageSize: number): Observable<ApiResponseGetCompaniesByUserI> {
+  //Método que consume la API para obtener el listado de empresas del usuario logueado
+  getCompaniesByUser(): Observable<ApiResponseGetCompaniesByUserI> {
     this.options = this.headersService.getHeaders(this.getHeaders());
-    return this.http.get<ApiResponseGetCompaniesByUserI>(this.urlApi + `/companies?currentPage=${currentPage}&pageSize=${pageSize}`, this.options);
+    return this.http.get<ApiResponseGetCompaniesByUserI>(this.urlApi + `/users/companies`, this.options);
+  }
+
+  //Método que consume la API para obtener el listado de empresas disponibles para generarles un contrato
+  getCompaniesForGenerateContract(): Observable<ApiResponseGetCompaniesForGenerateContractI> {
+    this.options = this.headersService.getHeaders(this.getHeaders());
+    return this.http.get<ApiResponseGetCompaniesForGenerateContractI>(this.urlApi + `/contracts-ai/companies`, this.options);
   }
 
   //Método que consume la API para crear una nueva empresa

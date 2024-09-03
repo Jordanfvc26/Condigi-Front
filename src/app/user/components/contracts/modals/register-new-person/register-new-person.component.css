@@ -1,0 +1,31 @@
+body{
+    padding: 20px !important;
+    background-color: var(--white-color);
+}
+
+.title>fa-icon,
+.title>h5{
+    color: var(--primary-color);
+}
+
+.icon-close{
+    cursor: pointer;
+    color: var(--gray-ligth-one-color)
+}
+
+.icon-close:hover{
+    color: var(--gray-dark-color)
+}
+
+.footer-modal{
+    display: flex;
+    justify-content: end;
+}
+
+.validators{
+    color: var(--cancel-color);
+}
+
+button{
+    padding: 5px 8px !important;
+}
