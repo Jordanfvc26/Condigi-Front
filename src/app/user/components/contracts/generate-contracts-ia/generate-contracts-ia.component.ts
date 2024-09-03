@@ -492,7 +492,7 @@ export class GenerateContractsIAComponent {
       this.newCompanyReceiver = true;
       this.openModalRegisterNewCompany();
     }
-    else {
+    else if (e.target.value == "other-person"){
       this.newPersonReceiver = true;
       this.openModalRegisterNewPerson();
     }
